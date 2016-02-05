@@ -1,0 +1,19 @@
+
+$ Division euclidienne en Orvet.
+
+entier x
+entier y
+
+lire x
+lire y
+
+entier quotient
+entier reste
+
+diviser x par y dans quotient
+
+réduire x modulo y dans reste
+
+écrire Le quotient de la division de $x par $y est $quotient
+écrire Le reste de la division de $x par $y est $reste
+

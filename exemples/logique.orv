@@ -1,0 +1,35 @@
+
+$ Opérateurs logiques.
+
+booléen a
+booléen b
+booléen c
+
+montrer a
+montrer b
+
+disjoindre a et b dans c
+
+montrer c
+
+complémenter a dans a
+
+montrer a
+montrer b
+
+disjoindre a et b dans c
+
+montrer c
+
+conjoindre a et b dans c
+
+montrer c
+
+complémenter b dans b
+
+montrer a
+montrer b
+
+conjoindre a et b dans c
+
+montrer c

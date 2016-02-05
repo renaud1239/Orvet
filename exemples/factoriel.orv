@@ -1,0 +1,18 @@
+
+$ Factoriel.
+
+entier N
+entier i
+entier prod
+
+lire N
+
+affecter 1 à prod
+
+pour i de 1 à N faire
+
+    multiplier prod par i dans prod
+    
+fin
+
+montrer prod

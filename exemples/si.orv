@@ -1,0 +1,29 @@
+
+$ Comparaison d'entiers.
+
+entier x
+entier y
+
+lire x
+lire y
+
+booléen égaux
+booléen différents
+
+comparer x avec y dans égaux
+
+différencier x avec y dans différents
+
+si égaux alors
+
+    écrire Les deux nombres sont égaux
+
+fin
+
+si différents alors
+
+    écrire Les deux nombres sont différents
+    
+fin
+
+

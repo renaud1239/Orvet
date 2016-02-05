@@ -1,0 +1,18 @@
+
+$ Tirages d'un dé à jouer en Orvet
+
+entier N
+entier i
+entier x
+
+lire N
+
+pour i de 1 à N faire
+
+    tirer x au hasard entre 1 et 6
+    
+    montrer x
+    
+fin
+
+

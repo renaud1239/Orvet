@@ -1,0 +1,18 @@
+
+$ Subtilités mots-clefs...
+
+entier i
+
+pour i de 1 à 10 faire
+
+    montrer i
+    
+    affecter 100 à i
+    
+    montrer i
+    
+fin
+
+montrer i
+
+

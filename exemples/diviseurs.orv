@@ -1,0 +1,39 @@
+
+$ Diviseurs et primalité.
+
+entier x
+
+lire x
+
+entier y
+entier i
+entier reste
+booléen juste
+booléen premier
+
+soustraire 1 à x dans y
+
+affecter vrai à premier
+
+pour i de 2 à y faire
+
+    réduire x modulo i dans reste
+    
+    comparer reste avec 0 dans juste
+    
+    si juste alors
+    
+        écrire $i est un diviseur de $x
+        
+        affecter faux à premier
+        
+    fin
+
+fin
+
+si premier alors
+
+    écrire $x est un nombre premier
+    
+fin
+

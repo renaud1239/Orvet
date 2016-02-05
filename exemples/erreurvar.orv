@@ -1,0 +1,12 @@
+
+$ Subtilité sur les déclarations de variables.
+
+entier i
+
+pour i de 1 à 10 faire
+
+    booléen b
+    
+    montrer b
+    
+fin

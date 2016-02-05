@@ -1,0 +1,18 @@
+
+$ Division euclidienne en Orvet.
+
+entier x
+entier y
+
+lire x
+lire y
+
+entier quotient
+entier reste
+
+diviser x par y dans quotient
+
+réduire x modulo y dans reste
+
+montrer quotient
+montrer reste

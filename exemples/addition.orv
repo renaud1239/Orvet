@@ -1,0 +1,14 @@
+
+$ Addition en Orvet.
+
+entier x
+entier y
+entier z
+
+lire x
+lire y
+
+ajouter x à y dans z
+
+montrer z
+

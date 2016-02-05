@@ -1,0 +1,31 @@
+
+$ Multiple.
+
+entier x
+entier y
+
+lire x
+lire y
+
+entier r
+
+booléen b
+
+réduire x modulo y dans r
+
+comparer r avec 0 dans b
+
+si b alors
+
+    écrire $x est bien un multiple de $y
+    
+fin
+
+différencier r avec 0 dans b
+
+si b alors
+
+    écrire $x n'est pas un multiple de $y
+    écrire Le reste de la division de $x par $y est $r
+    
+fin

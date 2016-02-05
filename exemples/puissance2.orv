@@ -1,0 +1,12 @@
+
+$ Calcul d'une puissance de 2 en Orvet.
+
+entier x
+entier p
+
+lire x
+
+élever 2 à la puissance x dans p
+
+montrer p
+ 

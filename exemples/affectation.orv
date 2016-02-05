@@ -1,0 +1,15 @@
+
+entier x
+entier y
+
+montrer x
+
+affecter 123 à x
+
+montrer x
+
+montrer y
+
+affecter x à y
+
+montrer y

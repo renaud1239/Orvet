@@ -1,0 +1,13 @@
+
+$ Une première boucle en Orvet.
+
+entier N
+entier i
+
+lire N
+
+pour i de 1 à N faire
+
+    montrer i
+    
+fin

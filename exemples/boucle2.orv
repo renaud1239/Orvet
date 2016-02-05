@@ -1,0 +1,19 @@
+
+$ Premières boucles imbriquées en Orvet.
+
+entier N
+entier i
+entier j
+
+lire N
+
+pour i de 1 à N faire
+
+    montrer i
+    
+    pour j de i à N faire
+    
+        montrer j
+    fin
+    
+fin

@@ -1,0 +1,16 @@
+
+$ Boucle et somme.
+
+entier N
+entier i
+entier somme
+
+lire N
+
+pour i de 1 à N faire
+
+    ajouter i à somme dans somme
+    
+fin
+
+montrer somme

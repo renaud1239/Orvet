@@ -1,0 +1,16 @@
+
+$ Somme sans boucle.
+
+entier N
+entier somme
+
+lire N
+
+ajouter 1 à N dans somme
+
+multiplier somme par N dans somme
+
+diviser somme par 2 dans somme
+
+montrer somme
+ 
