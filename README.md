@@ -48,4 +48,6 @@ Un certain nombre d'extensions sont prévues (cf. sect. "Extensions futures" du 
 
 Si vous souhaitez contribuer, contacter moi !
 
+Voici également le lien vers le [site officiel d'Orvet](http://sirdeyre.free.fr/orvet/orvet.htm) !
+
 Bonne programmation !
