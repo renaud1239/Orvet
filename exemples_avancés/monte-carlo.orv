@@ -1,0 +1,91 @@
+
+$ Estimation de pi par Monte-Carlo en Orvet
+$ (converge hyper lente assurée :-).
+
+entier nombre_décimales
+entier facteur_échelle
+
+lire nombre_décimales
+
+élever 10 à la puissance nombre_décimales dans facteur_échelle
+
+entier nombre_tirages
+entier nombre_succés
+entier borne_tirage
+entier carré_borne_tirage
+
+élever 10 à la puissance 40 dans borne_tirage
+multiplier borne_tirage par borne_tirage dans carré_borne_tirage
+
+entier i
+entier x
+entier y
+entier carré_x
+entier carré_y
+entier carré_d
+
+booléen intérieur_quart_cercle
+
+entier estimation
+entier estimation_précédente
+
+affecter -1 à estimation_précédente
+
+booléen continuer
+booléen initialisation
+
+affecter vrai à continuer
+
+tant que continuer faire
+
+    $ On note B pour borne_tirage.
+    $ Soient les point x / B et y / B du carré (0,0) -> (1,1).
+    $ On cherche à savoir si (x / B)²+(y / B)² est inférieur à 1.
+    $ Donc si (x²+y²)/B² < 1 ou encore si x²+y²<B².
+    $ Dans ce cas on compte le tirage comme un succès.
+    $ Du coup le rapport entre le nombre de succès et le nombre
+    $ de tirages fourni une estimation de pi/4.
+
+    tirer x au hasard entre 0 et borne_tirage
+    tirer y au hasard entre 0 et borne_tirage
+        
+    multiplier x par x dans carré_x
+    multiplier y par y dans carré_y
+    ajouter carré_x à carré_y dans carré_d
+    
+    minorer carré_borne_tirage par carré_d dans intérieur_quart_cercle
+    
+    si intérieur_quart_cercle alors
+    
+        ajouter 1 à nombre_succés dans nombre_succés
+    
+    fin    
+
+    ajouter 1 à nombre_tirages dans nombre_tirages
+    
+    multiplier nombre_succés par 4 dans estimation
+    multiplier estimation par facteur_échelle dans estimation
+    diviser estimation par nombre_tirages dans estimation
+    
+    montrer estimation
+    
+    différencier estimation avec estimation_précédente dans continuer
+    
+    minorer 100 par nombre_tirages dans initialisation
+    
+    si initialisation alors
+        
+        affecter vrai à continuer
+        
+    fin
+    
+    affecter estimation à estimation_précédente
+    
+fin
+
+montrer nombre_succés
+
+montrer nombre_tirages
+
+
+

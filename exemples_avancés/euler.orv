@@ -1,0 +1,57 @@
+$
+$ Estimation de pi avec la formule d'Euler :
+$
+$ Pi = 2(1 + 1/3 + 1x2/3x5 + 1x2x3 / 3x5x7 ... )
+$
+
+entier nombre_décimales
+entier facteur_échelle
+$ Il faut évaluer de l'ordre de 3.32n termes pour avoir n décimales correctes
+entier nombre_termes
+
+lire nombre_décimales
+
+élever 10 à la puissance nombre_décimales dans facteur_échelle
+
+entier numérateur
+entier dénominateur
+entier terme
+
+entier i
+entier j
+entier pi
+entier pi_précédent
+
+booléen continuer
+affecter vrai à continuer
+
+multiplier 2 par facteur_échelle dans pi
+
+affecter 2 à numérateur
+affecter 1 à dénominateur
+
+affecter 1 à i
+affecter 3 à j
+
+tant que continuer faire
+
+    multiplier numérateur par i dans numérateur
+    multiplier dénominateur par j dans dénominateur
+    
+    multiplier numérateur par facteur_échelle dans terme
+    diviser terme par dénominateur dans terme
+
+    ajouter terme à pi dans pi
+    
+    écrire pi ~ $pi
+
+    ajouter 1 à i dans i
+    ajouter 2 à j dans j
+    ajouter 1 à nombre_termes dans nombre_termes
+    
+    différencier pi avec pi_précédent dans continuer
+    affecter pi à pi_précédent
+    
+fin
+
+montrer nombre_termes

@@ -1,0 +1,47 @@
+
+$ Calcul une à une des décimales du résultat d'une division "comme à la main".
+$ Si le nombre de décimales est infini (par ex. 1 / 3) le programme ne termine pas !
+
+entier dividende
+entier diviseur
+
+lire dividende
+lire diviseur
+
+entier quotient
+entier reste
+
+diviser dividende par diviseur dans quotient
+
+réduire dividende modulo diviseur dans reste
+
+montrer quotient
+
+booléen reste_non_nul
+entier décimale
+entier nombre_décimales
+
+différencier reste avec 0 dans reste_non_nul
+
+$ a = b x q + r (avec r < b).
+$ 10r = b x q' + r' (avec r' < b)
+$ b x q' <= 10r < 10b
+$ => q' < 10
+
+tant que reste_non_nul alors
+
+    multiplier reste par 10 dans dividende
+
+    diviser dividende par diviseur dans décimale
+    
+    réduire dividende modulo diviseur dans reste
+    
+    écrire décimale = $décimale ( $nombre_décimales )
+    
+    différencier reste avec 0 dans reste_non_nul
+    
+    ajouter 1 à nombre_décimales dans nombre_décimales
+    
+fin
+
+montrer nombre_décimales
