@@ -67,6 +67,8 @@ def print_memory():
 def check_label(token):
 #    if not token.isalnum():
 #        return False
+    if len(token)==0:
+        return False
     if not token[0].isalpha():
         return False
     for i in range(1,len(token)):
@@ -358,7 +360,7 @@ def do_int_div(ip,source1,source2,dest,skip):
         if val2==0:
             print('Erreur ligne',line_num(ip),': division par zéro !')
             return -1
-        int_vars[dest]=int(val1/val2)
+        int_vars[dest]=int(val1//val2) # // = floordiv operator.
         if trace:
             print(line_num(ip),'- Division de la valeur',val1,'par la valeur',val2,'dans la variable entière',dest)
     return ip+1
