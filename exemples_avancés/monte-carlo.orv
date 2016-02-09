@@ -10,7 +10,7 @@ lire nombre_décimales
 élever 10 à la puissance nombre_décimales dans facteur_échelle
 
 entier nombre_tirages
-entier nombre_succés
+entier nombre_succès
 entier borne_tirage
 entier carré_borne_tirage
 
@@ -57,13 +57,13 @@ tant que continuer faire
     
     si intérieur_quart_cercle alors
     
-        ajouter 1 à nombre_succés dans nombre_succés
+        ajouter 1 à nombre_succès dans nombre_succès
     
     fin    
 
     ajouter 1 à nombre_tirages dans nombre_tirages
     
-    multiplier nombre_succés par 4 dans estimation
+    multiplier nombre_succès par 4 dans estimation
     multiplier estimation par facteur_échelle dans estimation
     diviser estimation par nombre_tirages dans estimation
     
@@ -83,7 +83,7 @@ tant que continuer faire
     
 fin
 
-montrer nombre_succés
+montrer nombre_succès
 
 montrer nombre_tirages
 
