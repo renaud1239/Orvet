@@ -786,11 +786,11 @@ def parse_assert_instr(ip,tokens,skip):
     else:
         return -1
 
-def parse_one_loop_cycle(ip,skip):
+def parse_instr_block(ip,skip):
     new_ip=ip
     while True: 
         if new_ip>=len(program):
-            print('Erreur ligne',line_num(new_ip),': pas de fin trouvée pour la boucle de la ligne',line_num(ip-1),'...')
+            print('Erreur ligne',line_num(new_ip),': pas de fin trouvée pour le block initié à la ligne',line_num(ip-1),'...')
             return -1
         if len(program[new_ip].split())>0:
             if program[new_ip].split()[0]=='fin':
@@ -822,7 +822,7 @@ def parse_for_instr(ip,tokens,skip):
             return -1
         new_ip=0
         if skip:
-            new_ip=parse_one_loop_cycle(ip+1,skip)
+            new_ip=parse_instr_block(ip+1,skip)
             if new_ip==-1:
                 return -1
         else:
@@ -836,7 +836,7 @@ def parse_for_instr(ip,tokens,skip):
             new_ip=-1
             for i in range(lower_bound,upper_bound+1):
                 int_vars[tokens[1]]=i
-                new_ip=parse_one_loop_cycle(ip+1,skip)
+                new_ip=parse_instr_block(ip+1,skip)
                 if new_ip==-1:
                     print('Interruption boucle de la ligne',line_num(ip))
                     return -1
@@ -848,7 +848,7 @@ def parse_while_instr(ip,tokens,skip):
     if len(tokens)<2:
         return -1
     if tokens[0]=='tant' and tokens[1]=='que':
-        if len(tokens)!=4 and tokens[3]!='faire':
+        if len(tokens)!=4 or tokens[3]!='faire':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de bouclage \'tant que\' incorrecte')
             return -1
         if not check_bool_value(tokens[2]):
@@ -856,20 +856,20 @@ def parse_while_instr(ip,tokens,skip):
             return -1
         new_ip=0
         if skip:
-            new_ip=parse_one_loop_cycle(ip+1,skip)
+            new_ip=parse_instr_block(ip+1,skip)
             if new_ip==-1:
                 return -1
         else:
             if not get_bool_value(tokens[2]):
                 # Then we still need to parse the loop body but with skipping on.
-                new_ip=parse_one_loop_cycle(ip+1,True)
+                new_ip=parse_instr_block(ip+1,True)
                 if new_ip==-1:
                     return -1                
             else:
                 if trace:
                     print(line_num(ip),'- Bouclage sur',tokens[2])                
                 while get_bool_value(tokens[2]):
-                    new_ip=parse_one_loop_cycle(ip+1,skip)
+                    new_ip=parse_instr_block(ip+1,skip)
                     if new_ip==-1:
                         print('Interruption boucle de la ligne',line_num(ip))
                         return -1            
@@ -879,7 +879,7 @@ def parse_while_instr(ip,tokens,skip):
 
 def parse_if_instr(ip,tokens,skip):
     if tokens[0]=='si':
-        if len(tokens)!=3 and tokens[3]!='alors':
+        if len(tokens)!=3 or tokens[2]!='alors':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction conditionnelle \'si\' incorrecte')
             return -1
         if not check_bool_value(tokens[1]):
@@ -887,7 +887,7 @@ def parse_if_instr(ip,tokens,skip):
             return -1
         new_ip=0
         if skip:
-            new_ip=parse_one_loop_cycle(ip+1,skip)
+            new_ip=parse_instr_block(ip+1,skip)
             if new_ip==-1:
                 return -1
         else:
@@ -895,20 +895,20 @@ def parse_if_instr(ip,tokens,skip):
                 if trace:
                     print(line_num(ip),'- Condition sur',tokens[1],'à faux')            
                 # Then we still need to parse the if body but with skipping on.
-                new_ip=parse_one_loop_cycle(ip+1,True)
+                new_ip=parse_instr_block(ip+1,True)
                 if new_ip==-1:
                     return -1                
             else:
                 if trace:
                     print(line_num(ip),'- Condition sur',tokens[1],'à vrai')            
-                new_ip=parse_one_loop_cycle(ip+1,skip)
+                new_ip=parse_instr_block(ip+1,skip)
                 if new_ip==-1:
                     print('Interruption si de la ligne',line_num(ip))
                     return -1            
         return new_ip+1
     else:
         return -1
-
+        
 def exec_line(ip,skip):
     tokens=program[ip].split()
     if len(tokens)==0:
