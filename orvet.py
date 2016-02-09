@@ -65,8 +65,6 @@ def print_memory():
     print_bool_vars()
 
 def check_label(token):
-#    if not token.isalnum():
-#        return False
     if len(token)==0:
         return False
     if not token[0].isalpha():
