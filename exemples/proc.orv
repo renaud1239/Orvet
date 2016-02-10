@@ -1,0 +1,26 @@
+
+$ Une première procédure en Orvet.
+
+entier a
+entier b
+entier t
+
+procédure échanger début
+
+    affecter a à t
+    affecter b à a
+    affecter t à b
+
+fin
+
+lire a
+lire b
+
+montrer a
+montrer b
+
+appeler échanger
+
+montrer a
+montrer b
+

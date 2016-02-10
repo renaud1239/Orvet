@@ -1,0 +1,64 @@
+
+$ Simplification d'une fraction par l'utilisation d'une
+$ procédure de calcul du PGCD.
+
+entier a
+entier b
+entier r
+entier pgcd
+entier t
+booléen échanger
+booléen continuer
+
+$ Calcule le PGCD de a et b dans pgcd à l'aide
+$ de l'algorithme d'Euclide.
+procédure plus_grand_commun_diviseur début
+
+    minorer b par a dans échanger
+
+    si échanger alors
+
+        affecter a à t
+        affecter b à a
+        affecter t à b
+        
+    fin
+    
+    $ A ce stade, on a a >= b.
+    
+    affecter vrai à continuer
+    
+    tant que continuer faire
+    
+        réduire a modulo b dans r
+        affecter b à a
+        affecter r à b
+        
+        différencier b avec 0 dans continuer
+    
+    fin
+    
+    affecter a à pgcd
+
+fin
+
+entier numérateur
+entier dénominateur
+
+lire numérateur
+lire dénominateur
+
+affecter numérateur à a
+affecter dénominateur à b
+
+appeler plus_grand_commun_diviseur
+
+montrer pgcd
+
+écrire La fraction $numérateur / $dénominateur ...
+
+diviser numérateur par pgcd dans numérateur
+diviser dénominateur par pgcd dans dénominateur
+
+écrire ... Se simplifie en $numérateur / $dénominateur
+

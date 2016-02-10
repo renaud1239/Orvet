@@ -24,6 +24,7 @@ version='0.1'
 program=[]
 int_vars=dict()
 bool_vars=dict()
+proc_table=dict()
 trace=False
 
 def load_program(prog_name):
@@ -36,7 +37,6 @@ def load_program(prog_name):
     print(l,'lignes chargées')
     file.close()
         
-    
 def print_program():
     l=0
     print('Programme :')
@@ -58,11 +58,17 @@ def print_bool_vars():
     print('Booléens :')
     for var,val in sorted(bool_vars.items()):
         print(var,'=',bool_to_str(val))
+
+def print_proc_table():
+    print('Procédures :')
+    for name,ip in sorted(proc_table.items()):
+        print(name,'@',ip)
         
 def print_memory():
     print('Mémoire :')
     print_int_vars()
     print_bool_vars()
+    print_proc_table()
 
 def check_label(token):
     if len(token)==0:
@@ -90,16 +96,19 @@ def is_defined(var):
     if is_bool_var(var):
         return True
     return False
+
+def is_proc_defined(name):
+    if is_proc(name):
+        return True
     
 def is_int_var(var):
-    if var in int_vars:
-        return True
-    return False
+    return var in int_vars
 
 def is_bool_var(var):
-    if var in bool_vars:
-        return True
-    return False
+    return var in bool_vars
+    
+def is_proc(name):
+    return name in proc_table
     
 def line_num(ip):
     return ip+1
@@ -906,6 +915,54 @@ def parse_if_instr(ip,tokens,skip):
         return new_ip+1
     else:
         return -1
+
+def parse_proc_instr(ip,tokens,skip):
+    if tokens[0]=='procédure':
+        if len(tokens)!=3 or tokens[2]!='début':
+            print('Erreur ligne',line_num(ip),': syntaxe de déclaration de procédure incorrecte')
+            return -1
+        if not check_label(tokens[1]):
+            print('Erreur ligne',line_num(ip),':',tokens[1],'n\'est pas un nom de procédure valide')
+            return -1
+        if is_proc_defined(tokens[1]):
+            print('Erreur ligne',line_num(ip),': une procédure',tokens[1],'est déjà définie')
+            return -1
+        # If we're not skipping, just add ip+1 in the proc_table.
+        if not skip:
+            proc_table[tokens[1]]=ip+1
+            if trace:
+                print(line_num(ip),'- Définition de la procédure',tokens[1],'@',ip+1)
+        # Then, regardless of skip value we skip over the proc body (procs are executed when they're called).
+        new_ip=parse_instr_block(ip+1,True)
+        if new_ip==-1:
+            return -1
+        return new_ip+1
+    else:
+        return -1
+
+def parse_call_instr(ip,tokens,skip):
+    if tokens[0]=='appeler':
+        if len(tokens)!=2:
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'appel de procédure incorrecte')
+            return -1
+        if not check_label(tokens[1]):
+            print('Erreur ligne',line_num(ip),':',tokens[1],'n\'est pas un nom de procédure valide')
+            return -1
+        if not is_proc_defined(tokens[1]):
+            print('Erreur ligne',line_num(ip),': la procédure',tokens[1],'n\'est pas définie')
+            return -1
+        if not skip:
+            if trace:
+                print(line_num(ip),'- Appel de la procédure',tokens[1])            
+            # Then we execute the block at the address in the proc table.
+            new_ip=parse_instr_block(proc_table[tokens[1]],False)
+            if new_ip==-1:
+                return -1                
+            if trace:
+                print(line_num(ip),'- Retour d\'appel de la procédure',tokens[1])            
+        return ip+1 # In all cases, once we're done, we jump to the instruction following the call.
+    else:
+        return -1
         
 def exec_line(ip,skip):
     tokens=program[ip].split()
@@ -999,6 +1056,12 @@ def exec_line(ip,skip):
         if new_ip!=-1:
             return new_ip
         new_ip=parse_while_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_proc_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_call_instr(ip,tokens,skip)
         if new_ip!=-1:
             return new_ip
         print('Erreur à la ligne',line_num(ip),': instruction inconnue ou séquence interrompue')

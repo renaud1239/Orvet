@@ -4,7 +4,7 @@ ORVET V0
 
 Orvet est un langage de programmation entièrement en français que j'ai développé pour faciliter l'apprentissage des rudiments de l'algorithmique et de la programmation par des enfants, à commencer par les miens ;-)
 
-Dans sa première version, Orvet permet de manipuler des nombres entiers (sans limitation de taille) ainsi que des booléens. Il est doté de structures de boucle et d'exécution conditionnelle. Toutes ses instructions ne font qu'une et une seule chose élémentaire (en ce sens il ressemble un peu à un super-assembleur). Tout est explicite.
+Dans sa première version, Orvet permet de manipuler des nombres entiers (sans limitation de taille) ainsi que des booléens. Il est doté de structures de boucle et d'exécution conditionnelle et il supporte les procédures. Toutes ses instructions ne font qu'une et une seule chose élémentaire (en ce sens il ressemble un peu à un super-assembleur). Tout est explicite.
 
 Orvet est facile à utiliser pour programmer (et accessoirement facile à parser et à interpréter).
 
