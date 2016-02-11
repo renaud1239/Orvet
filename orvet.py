@@ -28,14 +28,10 @@ proc_table=dict()
 trace=False
 
 def load_program(prog_name):
-    l=0
+    global program
     print('Chargement du programme')
-    with open(prog_name) as file:
-        for line in file:
-            program.append(line)
-            l=l+1
-    print(l,'lignes chargées')
-    file.close()
+    program = open(prog_name).readlines()
+    print(len(program),'lignes chargées')
         
 def print_program():
     l=0
