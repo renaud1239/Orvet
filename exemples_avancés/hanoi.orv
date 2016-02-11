@@ -1,0 +1,79 @@
+$
+$ Voici un programme pour résoudre le casse-tête des tours
+$ de Hanoï en quelques lignes de Python :
+$
+$     def hanoi(n,src,dst,piv):
+$       if n>0:
+$         hanoi(n-1,src,piv,dst)
+$         print(src,'->',dst)
+$         hanoi(n-1,piv,dst,src)
+$     
+$     def hanoi_top(n):
+$       hanoi(n,0,2,1)
+$ 
+$     hanoi_top(3)
+$
+$ Nous allons écrire ce programme en Orvet. Ce sera un peu
+$ plus long mais pas beaucoup plus.
+$
+$ C'est parti !
+$
+
+entier source
+entier destination
+entier pivot
+entier temp
+entier nombre_disques
+booléen rappel_nécessaire
+
+procédure hanoï début
+
+    différencier nombre_disques avec 0 dans rappel_nécessaire
+    
+    si rappel_nécessaire alors
+
+        soustraire 1 à nombre_disques dans nombre_disques
+        
+        $ Premier rappel, on échange destination et pivot.
+        affecter destination à temp
+        affecter pivot à destination
+        affecter temp à pivot
+        
+        $ Récursivité quand tu nous tiens...
+        appeler hanoï
+        
+        $ Ceci étant fait, on remet les choses bien en place.
+        affecter destination à temp
+        affecter pivot à destination
+        affecter temp à pivot
+        
+        écrire Déplacer sommet tour $source vers tour $destination
+        
+        $ Second rappel, on échange source et pivot.
+        affecter source à temp
+        affecter pivot à source
+        affecter temp à pivot
+        
+        $ Recursivité quand tu nous tiens (bis)...
+        appeler hanoï
+        
+        $ Et, de nouveau, on remet les choses bien en place...
+        affecter source à temp
+        affecter pivot à source
+        affecter temp à pivot
+    
+        $ ... Y compris pour le nombre de disques !
+        ajouter 1 à nombre_disques dans nombre_disques
+
+    fin
+
+fin
+
+lire nombre_disques
+
+affecter 0 à source
+affecter 1 à pivot
+affecter 2 à destination
+
+appeler hanoï
+
