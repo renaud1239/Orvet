@@ -13,6 +13,10 @@ $       hanoi(n,0,2,1)
 $ 
 $     hanoi_top(3)
 $
+$ Pour plus de détails aller voir à :
+$
+$     http://sirdeyre.free.fr/maths/hanoi.pdf
+$
 $ Nous allons écrire ce programme en Orvet. Ce sera un peu
 $ plus long mais pas beaucoup plus.
 $
