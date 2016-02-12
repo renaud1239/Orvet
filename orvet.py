@@ -34,10 +34,22 @@ def load_program(prog_name):
     print(len(program),'lignes chargées')
         
 def print_program():
+    nb_digits = len(str(len(program)))
+    form_str = '{{:{0}}} - {{}}'.format(nb_digits)
+
+    #One line equivalent of code beneath ;)
+    #print("".join(map(lambda l,line: form_str.format(l,line),range(len(program)), program)),end='')
+    
+    #Or even one line equivalent of whole function body :)
+    #print("".join(map(lambda l,line: '{{:{0}}} - {{}}'.format(len(str(len(program)))).format(l,line),range(len(program)), program)),end='')
+
+    #Or even more, whole function in one line :D
+    #print_program = lambda: print("".join(map(lambda l,line: '{{:{0}}} - {{}}'.format(len(str(len(program)))).format(l,line),range(len(program)), program)),end='')
+
     l=0
     print('Programme :')
     for line in program:
-        print(l,'-',line,end='')
+        print(form_str.format(l,line),end='')
         l=l+1
 
 def print_int_vars():
