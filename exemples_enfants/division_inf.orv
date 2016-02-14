@@ -28,7 +28,7 @@ $ 10r = b x q' + r' (avec r' < b)
 $ b x q' <= 10r < 10b
 $ => q' < 10
 
-tant que reste_non_nul alors
+tant que reste_non_nul faire
 
     multiplier reste par 10 dans dividende
 

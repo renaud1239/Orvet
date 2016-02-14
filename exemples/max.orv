@@ -1,0 +1,14 @@
+
+entier i
+entier N
+entier x
+
+affecter 20 à N
+
+pour i de 0 à N faire
+    
+    maximiser i et 10 dans x
+    
+    montrer x
+    
+fin

@@ -26,6 +26,7 @@ int_vars=dict()
 bool_vars=dict()
 proc_table=dict()
 trace=False
+interactive=True
 
 def load_program(prog_name):
     global program
@@ -1071,8 +1072,9 @@ def end_exec():
     print('Fin de l\'exécution')
     if trace:
         print_memory()
-    print()
-    x=input('Appuyer sur Entrée pour fermer...')
+    if interactive:
+        print()
+        x=input('Appuyer sur Entrée pour fermer...')
     sys.exit(1)
     
 def exec_program():
@@ -1086,7 +1088,7 @@ def exec_program():
 print('Orvet version',version)
 
 if len(sys.argv)<2:
-    print('Utilisation :',sys.argv[0],'[fichier].orv -trace (optionel)')
+    print('Utilisation :',sys.argv[0],'[fichier].orv -trace (optionel) -non-interactif (optionel)')
     sys.exit(1)
 
 try:    
@@ -1095,11 +1097,17 @@ except FileNotFoundError:
     print('Le fichier',sys.argv[1],'semble ne pas exister !')
     sys.exit(1)
 
-if len(sys.argv)==3:
-    if sys.argv[2]=='-trace':
-        trace=True
-    else:
-        print('Option inconnue :',sys.argv[2],'(ignorée)')
+if len(sys.argv)>2:
+    for i in range(2,len(sys.argv)):
+        unknown_option=True
+        if sys.argv[i]=='-trace':
+            trace=True
+            unknown_option=False
+        if sys.argv[i]=='-non-interactif':
+            interactive=False
+            unknown_option=False
+        if unknown_option:
+            print('Option inconnue :',sys.argv[2],'(ignorée)')
 
 # print_program()
 

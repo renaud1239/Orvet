@@ -1,0 +1,17 @@
+Orvet version 0.1
+Chargement du programme
+35 lignes chargées
+Démarrage de l'exécution
+
+a = faux
+b = faux
+c = faux
+a = vrai
+b = faux
+c = vrai
+c = faux
+a = vrai
+b = vrai
+c = vrai
+
+Fin de l'exécution

@@ -11,5 +11,5 @@ multiplier nombre_élèves par pourcentage_filles dans nombre_filles
 
 diviser nombre_filles par 100 dans nombre_filles
 
-écrire Le nombre de filles est $nombre_filles au nombre total d'élèves et pour 100 élèves de ce collège , il y a $pourcentage_filles filles.
+écrire Le nombre de filles est $nombre_filles au nombre total d'élèves et pour 100 élèves de ce collège, il y a $pourcentage_filles filles.
 
