@@ -1116,6 +1116,9 @@ try:
 except KeyboardInterrupt:
     print('\nInterruption utilisateur !')
     end_exec()
-
+except RuntimeError as err:
+    print('\nErreur d\'exécution Python :-(')
+    print('\nMessage d\'erreur Python :',err)
+    end_exec()
 
 
