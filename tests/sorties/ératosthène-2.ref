@@ -1,0 +1,34 @@
+Orvet version 0.1
+Chargement du programme
+69 lignes chargées
+Démarrage de l'exécution
+
+Valeur de l'entier borne ? borne = 100
+2 est premier 
+3 est premier 
+5 est premier 
+7 est premier 
+11 est premier 
+13 est premier 
+17 est premier 
+19 est premier 
+23 est premier 
+29 est premier 
+31 est premier 
+37 est premier 
+41 est premier 
+43 est premier 
+47 est premier 
+53 est premier 
+59 est premier 
+61 est premier 
+67 est premier 
+71 est premier 
+73 est premier 
+79 est premier 
+83 est premier 
+89 est premier 
+97 est premier 
+nombre_premiers = 25
+
+Fin de l'exécution

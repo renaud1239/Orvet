@@ -1,0 +1,69 @@
+
+$ Une version très simplifiée du crible d'Eratosthène comme
+$ exemple d'utilisation des dictionnaires.
+
+entier borne
+entier i
+entier j
+
+booléen continuer
+
+lire borne
+
+montrer borne
+
+dictionnaire premiers
+
+pour i de 2 à borne faire
+
+    associer i à i dans premiers
+    
+fin
+
+pour i de 2 à borne faire
+
+    affecter i à j
+    
+    affecter vrai à continuer
+    
+    $ écrire Marquage des multiples de $i
+    
+    tant que continuer faire
+
+        ajouter i à j dans j
+        
+        $ 'continuer' prend vrai si j>borne...
+        majorer borne par j dans continuer
+        $ ... Puis in fine vrai si j<=borne.
+        complémenter continuer dans continuer
+        $ Auquel cas on indique que i divise j en associant i à la clef j. 
+        si continuer alors
+        
+            associer j à i dans premiers
+        
+        fin
+    
+    fin
+    
+fin
+
+booléen premier
+entier nombre_premiers
+
+pour i de 2 à borne faire
+
+    accèder premiers avec i dans j
+    
+    comparer i avec j dans premier
+
+    si premier alors
+    
+        écrire $i est premier
+        
+        ajouter 1 à nombre_premiers dans nombre_premiers
+    
+    fin
+    
+fin
+
+montrer nombre_premiers

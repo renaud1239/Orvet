@@ -24,6 +24,7 @@ version='0.1'
 program=[]
 int_vars=dict()
 bool_vars=dict()
+dict_vars=dict()
 proc_table=dict()
 trace=False
 interactive=True
@@ -58,6 +59,11 @@ def print_bool_vars():
     for var,val in sorted(bool_vars.items()):
         print(var,'=',bool_to_str(val))
 
+def print_dict_vars():
+    print('Dictionnaires :')
+    for var,val in sorted(dict_vars.items()):
+        print(var,'=',val)
+    
 def print_proc_table():
     print('Procédures :')
     for name,ip in sorted(proc_table.items()):
@@ -67,6 +73,7 @@ def print_memory():
     print('Mémoire :')
     print_int_vars()
     print_bool_vars()
+    print_dict_vars()
     print_proc_table()
 
 def check_label(token):
@@ -88,27 +95,32 @@ def check_int(token):
         if token.split('-')[1].isdecimal():
             return True
     return False
-    
-def is_defined(var):
-    if is_int_var(var):
-        return True
-    if is_bool_var(var):
-        return True
-    return False
-
-def is_proc_defined(name):
-    if is_proc(name):
-        return True
-    
+        
 def is_int_var(var):
     return var in int_vars
 
 def is_bool_var(var):
     return var in bool_vars
     
+def is_dict_var(var):
+    return var in dict_vars
+    
 def is_proc(name):
     return name in proc_table
-    
+
+def is_defined(var):
+    if is_int_var(var):
+        return True
+    if is_bool_var(var):
+        return True
+    if is_dict_var(var):
+        return True
+    return False
+
+def is_proc_defined(name):
+    if is_proc(name):
+        return True
+
 def line_num(ip):
     return ip+1
     
@@ -261,7 +273,8 @@ def parse_assign_instr(ip,tokens,skip):
         if is_int_var(tokens[3]):
             return do_int_assign(ip,tokens[1],tokens[3],skip)
         if is_bool_var(tokens[3]):
-            return do_bool_assign(ip,tokens[1],tokens[3],skip)        
+            return do_bool_assign(ip,tokens[1],tokens[3],skip)
+        print('Erreur ligne',line_num(ip),': type incorrect pour la variable d\'affectation')
         return -1
     else:
         return -1
@@ -820,6 +833,9 @@ def parse_for_instr(ip,tokens,skip):
         if not is_defined(tokens[1]):
             print('Erreur ligne',line_num(ip),': la variable',tokens[1],'n\'est pas définie')
             return -1
+        if not is_int_var(tokens[1]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[1],'n\'est pas un entier')
+            return -1        
         if not check_int_value(tokens[3]):
             print('Erreur ligne',line_num(ip),':',tokens[3],'n\'est pas une borne de boucle valide')
             return -1
@@ -937,8 +953,8 @@ def parse_proc_instr(ip,tokens,skip):
             return -1
         return new_ip+1
     else:
-        return -1
-
+        return -1        
+        
 def parse_call_instr(ip,tokens,skip):
     if tokens[0]=='appeler':
         if len(tokens)!=2:
@@ -962,6 +978,206 @@ def parse_call_instr(ip,tokens,skip):
         return ip+1 # In all cases, once we're done, we jump to the instruction following the call.
     else:
         return -1
+
+def parse_dict_instr(ip,tokens,skip):
+    if tokens[0]=='dictionnaire':
+        if len(tokens)!=2:
+            print('Erreur ligne',line_num(ip),': syntaxe de déclaration incorrecte d\'un dictionnaire')
+            return -1
+        if not check_label(tokens[1]):
+            print('Erreur ligne',line_num(ip),':',tokens[1],'n\'est pas un nom de variable valide')
+            return -1
+        if is_defined(tokens[1]):
+            print('Erreur ligne',line_num(ip),': une variable',tokens[1],'est déjà définie')
+            return -1
+        if not skip:
+            dict_vars[tokens[1]]=dict()
+            if trace:
+                print(line_num(ip),'- Définition du dictionnaire',tokens[1],'(initialisé à vide)')
+        return ip+1
+    else:
+        return -1
+
+def do_int_insert(ip,key,val,dest,skip):
+    if not check_int_value(key):
+        print('Erreur ligne',line_num(ip),':',key,'n\'est pas une clef d\'insertion valide pour un dictionnaire')
+        return -1
+    if not check_int_value(val):
+        print('Erreur ligne',line_num(ip),':',val,'n\'est pas une valeur d\'insertion valide pour un dictionnaire')
+        return -1
+    if not skip:
+        key_as_int=get_int_value(key)
+        val_as_int=get_int_value(val)
+        dict_vars[dest][key_as_int]=val_as_int
+        if trace:
+            print(line_num(ip),'- Association/insertion de la clef',key_as_int,'à la valeur',val_as_int,'dans le dictionnaire',dest)
+    return ip+1
+
+def parse_insert_instr(ip,tokens,skip):
+    if tokens[0]=='insérer':
+        if len(tokens)!=4 or tokens[2]!='dans':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'insertion incorrecte')
+            return -1
+        if not assert_var_def(ip,tokens[3]):
+            return -1
+        if not is_dict_var(tokens[3]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[3],'n\'est pas un dictionnaire')
+            return -1
+        return do_int_insert(ip,tokens[1],'0',tokens[3],skip)
+    else:
+        return -1
+
+def parse_bind_instr(ip,tokens,skip):
+    if tokens[0]=='associer':
+        if len(tokens)!=6 or tokens[2]!='à' or tokens[4]!='dans':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'association incorrecte')
+            return -1
+        if not assert_var_def(ip,tokens[5]):
+            return -1
+        if not is_dict_var(tokens[5]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[5],'n\'est pas un dictionnaire')
+            return -1
+        return do_int_insert(ip,tokens[1],tokens[3],tokens[5],skip)
+    else:
+        return -1
+
+def do_int_access(ip,source,key,dest,skip):
+    if not check_int_value(key):
+        print('Erreur ligne',line_num(ip),':',key,'n\'est pas une clef valide pour accèder à',source)
+        return -1
+    if not skip:
+        key_as_int=get_int_value(key)
+        if not key_as_int in dict_vars[source]:
+            print('Erreur ligne',line_num(ip),':',key,'n\'est pas une clef présente dans',source)
+            return -1
+        int_vars[dest]=dict_vars[source][key_as_int]
+        if trace:
+            print(line_num(ip),'- Accès à',source,'avec la clef',key,' dans la variable entière',dest)
+    return ip+1
+       
+def parse_access_instr(ip,tokens,skip):
+    if tokens[0]=='accèder':
+        if len(tokens)!=6 or tokens[2]!='avec' or tokens[4]!='dans':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'accès incorrecte')
+            return -1
+        if not assert_var_def(ip,tokens[1]):
+            return -1
+        if not is_dict_var(tokens[1]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[5],'n\'est pas un dictionnaire')
+            return -1
+        if not assert_var_def(ip,tokens[5]):
+            return -1
+        if is_int_var(tokens[5]):
+            return do_int_access(ip,tokens[1],tokens[3],tokens[5],skip)
+        print('Erreur ligne',line_num(ip),': type incorrect pour la variable d\'affectation')
+        return -1
+    else:
+        return -1
+
+def do_bool_search(ip,source,key,dest,skip):
+    if not check_int_value(key):
+        print('Erreur ligne',line_num(ip),':',key,'n\'est pas une clef valide pour chercher dans',source)
+        return -1
+    if not skip:
+        key_as_int=get_int_value(key)
+        bool_vars[dest]=key_as_int in dict_vars[source]
+        if trace:
+            print(line_num(ip),'- Recherche dans',source,'avec la clef',key,'dans la variable booléenne',dest)
+    return ip+1
+
+def parse_search_instr(ip,tokens,skip):
+    if tokens[0]=='rechercher':
+        if len(tokens)!=6 or tokens[2]!='avec' or tokens[4]!='dans':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de recherche incorrecte')
+            return -1
+        if not assert_var_def(ip,tokens[1]):
+            return -1
+        if not is_dict_var(tokens[1]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[5],'n\'est pas un dictionnaire')
+            return -1
+        if not assert_var_def(ip,tokens[5]):
+            return -1
+        if is_bool_var(tokens[5]):
+            return do_bool_search(ip,tokens[1],tokens[3],tokens[5],skip)
+        print('Erreur ligne',line_num(ip),': type incorrect pour la variable d\'affectation')
+        return -1
+    else:
+        return -1
+
+def do_remove(ip,key,dest,skip):
+    if not check_int_value(key):
+        print('Erreur ligne',line_num(ip),':',key,'n\'est pas une clef valide pour une suppression de dictionnaire')
+        return -1
+    if not skip:
+        key_as_int=get_int_value(key)
+        if not key_as_int in dict_vars[dest]:
+            print('Erreur ligne',line_num(ip),':',key_as_int,'n\'est pas une clef présente dans',dest)
+            return -1
+        del dict_vars[dest][key_as_int]
+        if trace:
+            print(line_num(ip),'- Suppression de la clef',key_as_int,'du dictionnaire',dest)
+    return ip+1
+                
+def parse_remove_instr(ip,tokens,skip):
+    if tokens[0]=='supprimer':
+        if len(tokens)!=4 or tokens[2]!='de':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de suppression incorrecte')
+            return -1
+        if not assert_var_def(ip,tokens[3]):
+            return -1
+        if not is_dict_var(tokens[3]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[3],'n\'est pas un dictionnaire')
+            return -1
+        return do_remove(ip,tokens[1],tokens[3],skip)
+    else:
+        return -1
+
+def parse_on_instr(ip,tokens,skip):
+    if tokens[0]=='sur':
+        if len(tokens)!=6 or tokens[1]!='tout' or tokens[3]!='de' or tokens[5]!='faire':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'itération sur dictionnaire incorrecte')
+            return -1
+        if not check_label(tokens[2]):
+            print('Erreur ligne',line_num(ip),':',tokens[2],'n\'est pas un nom de variable valide')
+            return -1
+        if not is_defined(tokens[2]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[2],'n\'est pas définie')
+            return -1
+        if not is_int_var(tokens[2]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[2],'n\'est pas un entier')
+            return -1        
+        if not check_label(tokens[4]):
+            print('Erreur ligne',line_num(ip),':',tokens[4],'n\'est pas un nom de variable valide')
+            return -1
+        if not is_defined(tokens[4]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[4],'n\'est pas définie')
+            return -1
+        if not is_dict_var(tokens[4]):
+            print('Erreur ligne',line_num(ip),': la variable',tokens[4],'n\'est pas un dictionnaire')
+            return -1        
+        new_ip=0
+        if skip:
+            new_ip=parse_instr_block(ip+1,skip)
+            if new_ip==-1:
+                return -1
+        else:
+            if len(dict_vars[tokens[4]])==0:
+                new_ip=parse_instr_block(ip+1,skip)
+                if new_ip==-1:
+                    return -1
+            else:
+                if trace:
+                    print(line_num(ip),'- Bouclage sur les éléments de',tokens[4],'dans',tokens[2])
+                for i in sorted(dict_vars[tokens[4]]):
+                    int_vars[tokens[2]]=i
+                    new_ip=parse_instr_block(ip+1,skip)
+                    if new_ip==-1:
+                        print('Interruption boucle de la ligne',line_num(ip))
+                        return -1
+        return new_ip+1
+    else:
+        return -1
+        
         
 def exec_line(ip,skip):
     tokens=program[ip].split()
@@ -1061,6 +1277,27 @@ def exec_line(ip,skip):
         if new_ip!=-1:
             return new_ip
         new_ip=parse_call_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_dict_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_insert_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_bind_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_access_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_search_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_remove_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_on_instr(ip,tokens,skip)
         if new_ip!=-1:
             return new_ip
         print('Erreur à la ligne',line_num(ip),': instruction inconnue ou séquence interrompue')

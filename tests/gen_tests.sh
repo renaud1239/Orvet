@@ -75,6 +75,14 @@ echo '----------------------------------------'
 
 ./gen_test.sh ../exemples/simplifie_frac.orv entrées/simplifie_frac.txt sorties/simplifie_frac.ref
 
+./gen_test.sh ../exemples/ératosthène.orv entrées/ératosthène.txt sorties/ératosthène.ref
+
+./gen_test.sh ../exemples/ératosthène.orv entrées/ératosthène-2.txt sorties/ératosthène-2.ref
+
+./gen_test.sh ../exemples/ératosthène2.orv entrées/ératosthène.txt sorties/ératosthène2.ref
+
+./gen_test.sh ../exemples/ératosthène2.orv entrées/ératosthène-2.txt sorties/ératosthène2-2.ref
+
 ./gen_test.sh ../exemples_enfants/division_inf.orv entrées/division_inf.txt sorties/division_inf.ref
 
 ./gen_test.sh ../exemples_avancés/euler.orv entrées/euler.txt sorties/euler.ref
