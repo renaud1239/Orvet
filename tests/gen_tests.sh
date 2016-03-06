@@ -96,3 +96,5 @@ echo '----------------------------------------'
 ./gen_test.sh ../exemples_avancés/hanoi.orv entrées/hanoi.txt sorties/hanoi.ref
 
 ./gen_test.sh ../exemples_avancés/hanoi.orv entrées/hanoi-2.txt sorties/hanoi-2.ref
+
+./gen_test.sh ../exemples_avancés/RC4.orv entrées/RC4.txt sorties/RC4.ref

@@ -1,0 +1,105 @@
+
+$
+$ RC4 en Orvet.
+$
+$ RC4 est un algorithme de chiffrement tout à fait sérieux bien que 
+$ très simple à implémenter. Sa simplicité est presque touchante ;-)
+$
+$ Il commence à être un peu faible (il date des années 80) mais, bien 
+$ utilisé, il reste à ce jour tout de même assez solide.
+$
+$ Une implémentation de référence en Python est aussi donnée dans le
+$ répertoire.
+$
+
+dictionnaire clef
+dictionnaire état
+
+entier c
+entier i
+entier j
+entier k
+entier t
+entier état_i
+entier état_j
+entier octet_chiffrant
+
+procédure lire_clef début
+    pour i de 0 à 15 faire
+        lire c
+        réduire c modulo 256 dans c
+        associer i à c dans clef
+    fin
+fin
+
+procédure initialiser_état début
+    pour i de 0 à 255 faire
+        associer i à i dans état
+    fin
+fin
+
+$ def melanger_etat():
+$  j=0
+$  for i in range(0,256):
+$    j=(j+etat[i]+clef[i%16])%256
+$    t=etat[i]
+$    etat[i]=etat[j]
+$    etat[j]=t
+
+procédure mélanger_état début
+    affecter 0 à j
+    pour i de 0 à 255 faire
+        accèder état avec i dans état_i
+        ajouter état_i à j dans j
+        réduire i modulo 16 dans k
+        accèder clef avec k dans c
+        ajouter c à j dans j
+        réduire j modulo 256 dans j
+        accèder état avec j dans état_j
+        associer i à état_j dans état
+        associer j à état_i dans état
+    fin
+fin
+
+$ def octet_suivant():
+$   global i
+$   global j
+$   i=(i+1)%256
+$   j=(j+etat[i])%256
+$   t=etat[i]
+$   etat[i]=etat[j]
+$   etat[j]=t
+$   t=(etat[i]+etat[j])%256
+$   return etat[t]
+
+procédure octet_suivant début
+    ajouter 1 à i dans i
+    réduire i modulo 256 dans i
+    accèder état avec i dans état_i
+    ajouter état_i à j dans j
+    réduire j modulo 256 dans j
+    accèder état avec j dans état_j
+    associer i à état_j dans état
+    associer j à état_i dans état
+    ajouter état_i à état_j dans t
+    réduire t modulo 256 dans t
+    accèder état avec t dans octet_chiffrant
+fin
+
+appeler lire_clef
+
+appeler initialiser_état
+
+appeler mélanger_état
+
+entier nombre_octets
+
+lire nombre_octets
+
+affecter 0 à i
+affecter 0 à j
+
+pour k de 1 à nombre_octets faire
+    appeler octet_suivant
+    montrer octet_chiffrant
+fin
