@@ -1,0 +1,53 @@
+$ Tri à bulles (récursif) en Orvet.
+
+dictionnaire tableau
+
+entier taille
+entier borne
+entier valeur
+entier i
+entier j
+entier k
+entier tableau_j
+entier tableau_k
+
+booléen non_rien_à_faire
+booléen échanger
+
+procédure trier_tableau début
+    soustraire 2 à taille dans i
+    minorer taille par 1 dans non_rien_à_faire
+    si non_rien_à_faire alors
+        pour j de 0 à i faire
+            ajouter 1 à j dans k
+            accèder tableau avec j dans tableau_j
+            accèder tableau avec k dans tableau_k
+            majorer tableau_k par tableau_j dans échanger
+            si échanger alors
+                associer j à tableau_k dans tableau
+                associer k à tableau_j dans tableau
+            fin
+        fin
+        soustraire 1 à taille dans taille
+        $ Rappel de la procédure pour trier le sous-tableau à 1 élément de moins.
+        appeler trier_tableau
+        $ Ni vu ni connu, on remet les choses en place !
+        ajouter 1 à taille dans taille
+    fin
+fin
+
+lire taille
+
+soustraire 1 à taille dans borne
+
+pour i de 0 à borne faire
+    lire valeur
+    associer i à valeur dans tableau
+fin
+
+appeler trier_tableau
+
+pour i de 0 à borne faire
+    accèder tableau avec i dans valeur
+    écrire tableau [  $i ] = $valeur
+fin

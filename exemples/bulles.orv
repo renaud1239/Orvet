@@ -1,0 +1,53 @@
+$ Tri à bulles en Orvet.
+
+dictionnaire tableau
+
+entier taille
+entier borne
+entier valeur
+entier i
+entier j
+entier k
+entier tableau_j
+entier tableau_k
+
+booléen continuer
+booléen échanger
+
+$ Si taille = 1 (i=-1) alors rien à faire
+$ Si taille = 2 (i=0) alors au plus un échange
+
+procédure trier_tableau début
+    soustraire 2 à taille dans i
+    minorer taille par 1 dans continuer
+    tant que continuer faire
+        pour j de 0 à i faire
+            ajouter 1 à j dans k
+            accèder tableau avec j dans tableau_j
+            accèder tableau avec k dans tableau_k
+            majorer tableau_k par tableau_j dans échanger
+            si échanger alors
+                associer j à tableau_k dans tableau
+                associer k à tableau_j dans tableau
+            fin
+        fin
+        différencier i avec 0 dans continuer
+        soustraire 1 à i dans i
+    fin
+fin
+
+lire taille
+
+soustraire 1 à taille dans borne
+
+pour i de 0 à borne faire
+    lire valeur
+    associer i à valeur dans tableau
+fin
+
+appeler trier_tableau
+
+pour i de 0 à borne faire
+    accèder tableau avec i dans valeur
+    écrire tableau [  $i ] = $valeur
+fin

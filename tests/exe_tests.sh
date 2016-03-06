@@ -83,6 +83,12 @@ echo '----------------------------------------'
 
 ./exe_test.sh ../exemples/ératosthène2.orv entrées/ératosthène-2.txt sorties/ératosthène2-2.ref
 
+./exe_test.sh ../exemples/bulles.orv entrées/tri.txt sorties/bulles.ref
+
+./exe_test.sh ../exemples/bulles-rec.orv entrées/tri.txt sorties/bulles-rec.ref
+
+./exe_test.sh ../exemples/tri-facile.orv entrées/tri.txt sorties/tri-facile.ref
+
 ./exe_test.sh ../exemples_enfants/division_inf.orv entrées/division_inf.txt sorties/division_inf.ref
 
 ./exe_test.sh ../exemples_avancés/euler.orv entrées/euler.txt sorties/euler.ref

@@ -1,0 +1,42 @@
+$ Tri facile en Orvet.
+
+dictionnaire tableau
+dictionnaire temp
+
+entier taille
+entier borne
+entier valeur
+entier i
+
+$ Pour trier tableau, on utilise un dictionnaire
+$ intermédiaire dans lequel on insère les valeurs
+$ contenues dans le tableau que l'on accède
+$ ensuite par ordre croissant en itérant sur ce
+$ dictionnaire temporaire... Et le tour est joué !
+procédure trier_tableau début
+    pour i de 0 à borne faire
+        accèder tableau avec i dans valeur
+        insérer valeur dans temp
+    fin
+    affecter 0 à i
+    sur tout valeur de temp faire
+        associer i à valeur dans tableau
+        ajouter 1 à i dans i
+    fin
+fin
+
+lire taille
+
+soustraire 1 à taille dans borne
+
+pour i de 0 à borne faire
+    lire valeur
+    associer i à valeur dans tableau
+fin
+
+appeler trier_tableau
+
+pour i de 0 à borne faire
+    accèder tableau avec i dans valeur
+    écrire tableau [  $i ] = $valeur
+fin
