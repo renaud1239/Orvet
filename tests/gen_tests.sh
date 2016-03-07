@@ -75,6 +75,8 @@ echo '----------------------------------------'
 
 ./gen_test.sh ../exemples/simplifie_frac.orv entrées/simplifie_frac.txt sorties/simplifie_frac.ref
 
+./gen_test.sh ../exemples/famille.orv entrées/famille.txt sorties/famille.ref
+
 ./gen_test.sh ../exemples/ératosthène.orv entrées/ératosthène.txt sorties/ératosthène.ref
 
 ./gen_test.sh ../exemples/ératosthène.orv entrées/ératosthène-2.txt sorties/ératosthène-2.ref

@@ -1,0 +1,22 @@
+dictionnaire famille
+
+associer 2004 à 1 dans famille
+
+associer 2006 à 1 dans famille
+
+associer 2009 à 1 dans famille
+
+associer 1974 à 1 dans famille
+
+associer 1976 à 1 dans famille
+
+entier année
+entier nombre
+
+sur tout année de famille faire
+
+    accéder famille avec année dans nombre
+
+    écrire $nombre membre(s) de la famille sont né(s) en $année
+
+fin
