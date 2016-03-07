@@ -20,8 +20,8 @@ procédure trier_tableau début
     si non_rien_à_faire alors
         pour j de 0 à i faire
             ajouter 1 à j dans k
-            accèder tableau avec j dans tableau_j
-            accèder tableau avec k dans tableau_k
+            accéder tableau avec j dans tableau_j
+            accéder tableau avec k dans tableau_k
             majorer tableau_k par tableau_j dans échanger
             si échanger alors
                 associer j à tableau_k dans tableau
@@ -48,6 +48,6 @@ fin
 appeler trier_tableau
 
 pour i de 0 à borne faire
-    accèder tableau avec i dans valeur
+    accéder tableau avec i dans valeur
     écrire tableau [  $i ] = $valeur
 fin

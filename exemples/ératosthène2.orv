@@ -53,7 +53,7 @@ entier nombre_premiers
 $ On enlève tous les nombres non premiers du dictionnaire.
 pour i de 2 à borne faire
 
-    accèder premiers avec i dans j
+    accéder premiers avec i dans j
     
     différencier i avec j dans non_premier
 

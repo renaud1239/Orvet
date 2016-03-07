@@ -184,7 +184,7 @@ def parse_read_instr(ip,tokens,skip):
             if is_int_var(tokens[1]):
                 val=input('Valeur de l\'entier '+tokens[1]+' ? ')
                 while not check_int(val):
-                    print('Ce n\'est pas un entier !')
+                    print('\'',val,'\' n\'est pas un entier !')
                     val=input('Valeur de l\'entier '+tokens[1]+' ? ')
                 int_vars[tokens[1]]=int(val)
                 if trace:
@@ -1043,7 +1043,7 @@ def parse_bind_instr(ip,tokens,skip):
 
 def do_int_access(ip,source,key,dest,skip):
     if not check_int_value(key):
-        print('Erreur ligne',line_num(ip),':',key,'n\'est pas une clef valide pour accèder à',source)
+        print('Erreur ligne',line_num(ip),':',key,'n\'est pas une clef valide pour accéder à',source)
         return -1
     if not skip:
         key_as_int=get_int_value(key)
@@ -1056,7 +1056,7 @@ def do_int_access(ip,source,key,dest,skip):
     return ip+1
        
 def parse_access_instr(ip,tokens,skip):
-    if tokens[0]=='accèder':
+    if tokens[0]=='accéder':
         if len(tokens)!=6 or tokens[2]!='avec' or tokens[4]!='dans':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'accès incorrecte')
             return -1

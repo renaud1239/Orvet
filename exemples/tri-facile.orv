@@ -15,7 +15,7 @@ $ ensuite par ordre croissant en itérant sur ce
 $ dictionnaire temporaire... Et le tour est joué !
 procédure trier_tableau début
     pour i de 0 à borne faire
-        accèder tableau avec i dans valeur
+        accéder tableau avec i dans valeur
         insérer valeur dans temp
     fin
     affecter 0 à i
@@ -37,6 +37,6 @@ fin
 appeler trier_tableau
 
 pour i de 0 à borne faire
-    accèder tableau avec i dans valeur
+    accéder tableau avec i dans valeur
     écrire tableau [  $i ] = $valeur
 fin

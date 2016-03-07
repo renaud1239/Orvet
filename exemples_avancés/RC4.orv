@@ -49,13 +49,13 @@ $    etat[j]=t
 procédure mélanger_état début
     affecter 0 à j
     pour i de 0 à 255 faire
-        accèder état avec i dans état_i
+        accéder état avec i dans état_i
         ajouter état_i à j dans j
         réduire i modulo 16 dans k
-        accèder clef avec k dans c
+        accéder clef avec k dans c
         ajouter c à j dans j
         réduire j modulo 256 dans j
-        accèder état avec j dans état_j
+        accéder état avec j dans état_j
         associer i à état_j dans état
         associer j à état_i dans état
     fin
@@ -75,15 +75,15 @@ $   return etat[t]
 procédure octet_suivant début
     ajouter 1 à i dans i
     réduire i modulo 256 dans i
-    accèder état avec i dans état_i
+    accéder état avec i dans état_i
     ajouter état_i à j dans j
     réduire j modulo 256 dans j
-    accèder état avec j dans état_j
+    accéder état avec j dans état_j
     associer i à état_j dans état
     associer j à état_i dans état
     ajouter état_i à état_j dans t
     réduire t modulo 256 dans t
-    accèder état avec t dans octet_chiffrant
+    accéder état avec t dans octet_chiffrant
 fin
 
 appeler lire_clef

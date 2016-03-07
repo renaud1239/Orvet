@@ -52,7 +52,7 @@ entier nombre_premiers
 
 pour i de 2 à borne faire
 
-    accèder premiers avec i dans j
+    accéder premiers avec i dans j
     
     comparer i avec j dans premier
 
