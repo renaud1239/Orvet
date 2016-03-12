@@ -91,9 +91,23 @@ echo '----------------------------------------'
 
 ./gen_test.sh ../exemples/tri-facile.orv entrées/tri.txt sorties/tri-facile.ref
 
+./gen_test.sh ../exemples/galettes.orv entrées/galettes.txt sorties/galettes.ref
+
+./gen_test.sh ../exemples/code.orv entrées/code.txt sorties/code.ref
+
+./gen_test.sh ../exemples/code.orv entrées/code-2.txt sorties/code-2.ref
+
+./gen_test.sh ../exemples/code.orv entrées/code-3.txt sorties/code-3.ref
+
+./gen_test.sh ../exemples/fibonacci.orv entrées/fibonacci.txt sorties/fibonacci.ref
+
 ./gen_test.sh ../exemples_enfants/division_inf.orv entrées/division_inf.txt sorties/division_inf.ref
 
 ./gen_test.sh ../exemples_avancés/euler.orv entrées/euler.txt sorties/euler.ref
+
+./gen_test.sh ../exemples_avancés/fibonacci-rec.orv entrées/fibonacci-rec.txt sorties/fibonacci-rec.ref
+
+./gen_test.sh ../exemples_avancés/fibonacci-rec.orv entrées/fibonacci-rec-2.txt sorties/fibonacci-rec-2.ref
 
 ./gen_test.sh ../exemples_avancés/hanoi.orv entrées/hanoi.txt sorties/hanoi.ref
 

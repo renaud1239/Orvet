@@ -1,0 +1,58 @@
+
+$
+$ Fibonacci récursif avec mémoïsation.
+$
+$ Note : sans mémoïsation c'est juste HYPER inefficace ;-)
+$
+
+entier x
+entier F
+
+dictionnaire F_mém
+
+entier F_anté_précédent
+entier F_précédent
+
+booléen zéro
+booléen un
+booléen sup_un
+booléen déjà_calculé
+booléen non_déjà_calculé
+
+procédure fibonacci début
+    comparer x avec 0 dans zéro
+    si zéro alors
+        associer 0 à 0 dans F_mém
+        affecter 0 à F
+    fin
+    comparer x avec 1 dans un
+    si un alors
+        associer 1 à 1 dans F_mém
+        affecter 1 à F
+    fin
+    majorer 1 par x dans sup_un
+    si sup_un alors
+        rechercher F_mém avec x dans déjà_calculé
+        complémenter déjà_calculé dans non_déjà_calculé
+        si non_déjà_calculé alors
+            soustraire 1 à x dans x
+            appeler fibonacci
+            soustraire 1 à x dans x
+            appeler fibonacci
+            accéder F_mém avec x dans F_anté_précédent
+            ajouter 1 à x dans x
+            accéder F_mém avec x dans F_précédent
+            $ On remet les choses en place après les appels récursifs.
+            ajouter 1 à x dans x
+            ajouter F_anté_précédent à F_précédent dans F
+            $ M. à j. structure de mémoïsation.
+            associer x à F dans F_mém
+        fin
+    fin
+fin
+
+lire x
+
+appeler fibonacci
+
+écrire F( $x ) = $F

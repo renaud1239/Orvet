@@ -1,0 +1,78 @@
+
+$
+$ Lorsque M. Tout le Monde configure un antivol de vélo à quatre chiffres,
+$ il arrive souvent qu'il choisisse deux valeurs correspondants à des
+$ numéro de jours dans un mois.
+$
+$ Du coup, cela ne fait plus que 31x31=961 possibilités à tester au lieu des
+$ des 10000 possibles.
+$
+$ Si, de plus, M. Tout le Monde n'aime pas avoir l'impression de "donner"
+$ des chiffres de sa combinaison il aura tendance à ne laisser visible que
+$ des chiffres qui ne sont pas dans la combinaison ouvrante (c'est humain,
+$ après tout la machine Enigma ne chiffrait jamais une lettre par elle même
+$ ce qui est une faiblesse importante !).
+$
+$ On peut alors exploiter cette heuristique pour diminuer encore le nombre
+$ de combinaisons à tester, mais aussi pour choisir de ne laisser visible
+$ que des chiffres qui maximisent le nombre de combinaisons résiduelles à
+$ essayer.
+$
+$ Par exemple, si on laisse l'antivol à 0, 0, 0, 0 il ne reste "que" 361
+$ essais à faire alors que si on laisse l'antivol à 9, 9, 9, 9 il en restera
+$ 784, ce qui est un peu mieux...
+$
+
+entier chiffre_init_1
+entier chiffre_init_2
+entier chiffre_init_3
+entier chiffre_init_4
+
+lire chiffre_init_1
+lire chiffre_init_2
+lire chiffre_init_3
+lire chiffre_init_4
+
+entier chiffre_1
+entier chiffre_2
+entier chiffre_3
+entier chiffre_4
+
+entier i
+entier j
+
+entier nombre_combinaisons
+entier nombre_admissibles
+
+booléen non_égaux
+booléen admissible
+booléen non_admissible
+
+pour i de 1 à 31 faire
+    diviser i par 10 dans chiffre_1
+    réduire i modulo 10 dans chiffre_2
+    pour j de 1 à 31 faire
+        diviser j par 10 dans chiffre_3
+        réduire j modulo 10 dans chiffre_4
+        différencier chiffre_init_1 avec chiffre_1 dans admissible
+        différencier chiffre_init_2 avec chiffre_2 dans non_égaux
+        conjoindre non_égaux et admissible dans admissible
+        différencier chiffre_init_3 avec chiffre_3 dans non_égaux
+        conjoindre non_égaux et admissible dans admissible
+        différencier chiffre_init_4 avec chiffre_4 dans non_égaux
+        conjoindre non_égaux et admissible dans admissible
+        complémenter admissible dans non_admissible
+        si admissible alors
+            écrire $chiffre_1 $chiffre_2 $chiffre_3 $chiffre_4 (*)
+            ajouter 1 à nombre_admissibles dans nombre_admissibles
+        fin
+        si non_admissible alors
+            écrire $chiffre_1 $chiffre_2 $chiffre_3 $chiffre_4
+        fin
+        ajouter 1 à nombre_combinaisons dans nombre_combinaisons
+    fin
+fin
+
+écrire
+montrer nombre_admissibles
+montrer nombre_combinaisons

@@ -1,0 +1,25 @@
+
+$ Suite de Fibonacci.
+
+entier N
+
+lire N
+
+entier i
+entier précédent
+entier anté_précédent
+entier fibo
+
+affecter 1 à précédent
+
+écrire F( 0 ) = $anté_précédent
+écrire F( 1 ) = $précédent
+
+pour i de 2 à N faire
+
+    ajouter anté_précédent à précédent dans fibo
+    écrire F( $i ) = $fibo
+    affecter précédent à anté_précédent
+    affecter fibo à précédent
+
+fin

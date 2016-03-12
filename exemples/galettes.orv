@@ -1,0 +1,79 @@
+$
+$ Histoire de galettes des rois.
+$
+$ Calcul de la probabilité pour que, dans une famille de 5 personnes,
+$ chacun ait au moins une fois la fève étant donné un nombre de galettes.
+$
+$ Il suffit de dénombrer le nombre de nombres à 5 chiffres écris en base n 
+$ (n étant le nombre de galettes), sommant à n et ceux d'entre eux qui ne 
+$ contiennent pas de zéro.
+$
+$ À l'évidence, résoudre le problème en comptant explicitement de la manière 
+$ ci-dessous est un peu "brutal" (ceci dit D. Knuth a un avis plus nuancé sur 
+$ sur cette question, cf. ACP volume 4A p. 282). De plus, le but est un peu
+$ ici de faire un beau test de boucles imbriquées ;-)
+$
+$
+
+entier nombre_galettes
+
+lire nombre_galettes
+
+entier i
+entier j
+entier k
+entier l
+entier m
+
+entier borne_j
+entier borne_k
+entier borne_l
+
+booléen non_zéro
+booléen favorable
+booléen défavorable
+
+entier nombre_cas
+entier nombre_favorables
+entier pourcentage
+
+pour i de 0 à nombre_galettes faire
+    soustraire i à nombre_galettes dans borne_j
+    pour j de 0 à borne_j faire
+        soustraire j à borne_j dans borne_k
+        pour k de 0 à borne_k faire
+            soustraire k à borne_k dans borne_l
+            pour l de 0 à borne_l faire
+                soustraire l à borne_l dans m
+                différencier i avec 0 dans non_zéro
+                affecter non_zéro à favorable
+                différencier j avec 0 dans non_zéro
+                conjoindre non_zéro et favorable dans favorable
+                différencier k avec 0 dans non_zéro
+                conjoindre non_zéro et favorable dans favorable
+                différencier l avec 0 dans non_zéro
+                conjoindre non_zéro et favorable dans favorable
+                différencier m avec 0 dans non_zéro
+                conjoindre non_zéro et favorable dans favorable
+                si favorable alors
+                    écrire $i $j $k $l $m (*)
+                    ajouter 1 à nombre_favorables dans nombre_favorables
+                fin
+                complémenter favorable dans défavorable
+                si défavorable alors
+                    écrire $i $j $k $l $m
+                fin
+                ajouter 1 à nombre_cas dans nombre_cas
+            fin
+        fin
+    fin
+fin
+
+montrer nombre_cas
+montrer nombre_favorables
+
+multiplier nombre_favorables par 100 dans pourcentage
+diviser pourcentage par nombre_cas dans pourcentage
+
+écrire
+écrire $pourcentage %
