@@ -35,6 +35,8 @@ echo '----------------------------------------'
 
 ./gen_test.sh ../exemples/bonjour.orv entrées/bonjour.txt sorties/bonjour.ref
 
+./gen_test.sh ../exemples/bonjour2.orv entrées/bonjour.txt sorties/bonjour2.ref
+
 ./gen_test.sh ../exemples/diveuclid2.orv entrées/diveuclid.txt sorties/diveuclid2.ref
 
 ./gen_test.sh ../exemples/booléens.orv entrées/booléens.txt sorties/booléens.ref

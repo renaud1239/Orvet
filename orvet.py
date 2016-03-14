@@ -755,9 +755,13 @@ def parse_random_instr(ip,tokens,skip):
 def parse_write_instr(ip,tokens,skip):
     if tokens[0]=='écrire':
         if not skip:
+            no_cr=False
             for i in range(1,len(tokens)):
                 if tokens[i][0]!='$':
-                    print(tokens[i],'',end='')
+                    if i==len(tokens)-1 and tokens[i]=='pdrc':
+                        no_cr=True
+                    else:
+                        print(tokens[i],'',end='')
                 else:
                     varname=tokens[i].split('$')[1]
                     if not assert_var_def(ip,varname):
@@ -766,7 +770,8 @@ def parse_write_instr(ip,tokens,skip):
                         print(int_vars[varname],'',end='')
                     if is_bool_var(varname):
                         print(bool_to_str(bool_vars[varname]),'',end='')
-            print()
+            if not no_cr:
+                print()
             if trace:
                 print(line_num(ip),'- Ecriture ci-dessus')
         return ip+1

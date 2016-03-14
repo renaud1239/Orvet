@@ -1,0 +1,17 @@
+
+$ "Bonjour monde !" avec plusieurs instructions écrire.
+$ "pdrc" signifie "pas de retour chariot" et permet d'écrire
+$ un message sans aller à la ligne à la fin.
+$
+$ Si jamais on veut vraiment écrire la chaîne "pdrc" à l'écran
+$ il suffit d'utiliser les deux instructions suivantes :
+$
+$     écrire pdrc pdrc
+$     écrire
+$
+
+écrire Bonjour pdrc
+écrire tout pdrc
+écrire le pdrc
+écrire monde pdrc
+écrire !
