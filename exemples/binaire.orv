@@ -1,0 +1,98 @@
+
+$
+$ Enumération de mots binaires.
+$
+$ Algorithme G (Gray binary generation), Knuth, TACP vol. 4A, p. 286.
+$
+$ L'algorithme énumère tous les mots binaires sur 'nombre_bits' bits 
+$ en ne modifiant qu'un seul bit à la fois pour passer d'un mot au
+$ suivant dans l'énumération.
+$
+$ Pour ce faire, l'algorithme maintient un bit de parité.
+$ 
+$ L'algorithme commence avec le mot zéro e.g. 0, 0, 0 sur 3 bits et
+$ parité à 0. Parité est complémenté à chaque étape.
+$
+$ Si parité est à 1, alors l'algorithme complémente le bit n° 0.
+$
+$ Si parité est à 0, alors l'algorithme complémente le bit d'indice
+$ le plus petit j >= 1 t. q. le bit d'indice j-1 soit 1.
+$
+$ Exemple, sur 3 bits,
+$
+$   (parité initialisé à 0)          0, 0, 0 
+$   (parité prend 1)              => 1, 0, 0
+$   (parité prend 0, j finit à 1) => 1, 1, 0
+$   (parité prend 1)              => 0, 1, 0
+$   (parité prend 0, j finit à 2) => 0, 1, 1
+$   (parité prend 1)              => 1, 1, 1
+$   (parité prend 0, j finit à 1) => 1, 0, 1
+$   (parité prend 1)              => 0, 0, 1
+$
+$ Et voilà !
+$
+$ Ce qui est sympa quand on créé son propre langage de programmation
+$ c'est que cela fait un bon prétexte pour programmer de jolis algo-
+$ rithmes que l'on arrive jamais à prendre le temps d'écrire pour le
+$ plaisir !
+$ 
+
+entier nombre_bits
+entier puissance_de_2
+entier borne
+
+dictionnaire mot_binaire
+
+entier i
+entier j
+entier k
+entier bit
+entier bit_parité
+
+booléen pair
+booléen continuer
+
+procédure écrire_mot début
+    sur tout i de mot_binaire faire
+        accéder mot_binaire avec i dans bit
+        écrire $bit pdrc
+    fin
+    écrire
+fin
+
+procédure mot_suivant début
+    affecter 0 à j
+    soustraire bit_parité à 1 dans bit_parité
+    comparer bit_parité avec 0 dans pair
+    si pair alors
+        accéder mot_binaire avec j dans bit
+        comparer bit avec 0 dans continuer
+        tant que continuer faire
+            ajouter 1 à j dans j
+            accéder mot_binaire avec j dans bit
+            comparer bit avec 0 dans continuer
+        fin
+        ajouter 1 à j dans j
+    fin
+    accéder mot_binaire avec j dans bit
+    soustraire bit à 1 dans bit
+    associer j à bit dans mot_binaire
+fin
+
+lire nombre_bits
+
+soustraire 1 à nombre_bits dans borne
+
+pour i de 0 à borne faire
+    associer i à 0 dans mot_binaire
+fin
+
+élever 2 à la puissance nombre_bits dans puissance_de_2
+
+appeler écrire_mot
+
+pour k de 2 à puissance_de_2 faire
+    appeler mot_suivant
+    appeler écrire_mot
+fin
+

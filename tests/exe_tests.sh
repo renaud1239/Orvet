@@ -103,6 +103,10 @@ echo '----------------------------------------'
 
 ./exe_test.sh ../exemples/fibonacci.orv entrées/fibonacci.txt sorties/fibonacci.ref
 
+./exe_test.sh ../exemples/binaire.orv entrées/binaire.txt sorties/binaire.ref
+
+./exe_test.sh ../exemples/binaire.orv entrées/binaire-2.txt sorties/binaire-2.ref
+
 ./exe_test.sh ../exemples_enfants/division_inf.orv entrées/division_inf.txt sorties/division_inf.ref
 
 ./exe_test.sh ../exemples_avancés/euler.orv entrées/euler.txt sorties/euler.ref
