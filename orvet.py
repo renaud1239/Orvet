@@ -1363,5 +1363,10 @@ except RuntimeError as err:
     print('\nErreur d\'exécution Python :-(')
     print('\nMessage d\'erreur Python :',err)
     end_exec()
-
+except EOFError as err:
+    print('\nErreur d\'entrées/sortie Python :-(')
+    print('\nMessage d\'erreur Python :',err)
+    interactive=False
+    end_exec()
+    
 
