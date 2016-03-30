@@ -1,0 +1,316 @@
+$
+$ Ce programme simule une machine à chiffrer C-36.
+$
+$ Plus précisément, ce programme engendre la séquence de
+$ rotations de la roue chiffrante de la machine qui
+$ correspondent in fine à des valeurs à ajouter aux lettres
+$ du message clair (selon l'alphabet suivant) puis à appli-
+$ quer la substitution suivante :
+$
+$   00 - A => T - 08
+$   01 - B => S - 09
+$   02 - C => R - 10
+$   03 - D => Q - 11
+$   04 - E => P - 12
+$   05 - F => O - 13
+$   06 - G => N - 14
+$   07 - H => M - 15
+$   08 - I => L - 16
+$   09 - J => J - 17
+$   10 - L => I - 18
+$   11 - M => H - 19
+$   12 - N => G - 20
+$   13 - O => F - 21
+$   14 - P => E - 22
+$   15 - Q => D - 23
+$   16 - R => C - 24
+$   17 - S => B - 25
+$   18 - T => A - 00
+$   19 - U => K - 01
+$   20 - V => Z - 02
+$   21 - W => Y - 03
+$   22 - X => X - 04
+$   23 - Y => W - 05
+$   24 - Z => V - 06
+$   25 - K => U - 07
+$
+$ Par exemple pour la lettre 'R' combinée avec la rotation 18
+$ donne (modulo 26) 'I' => 'L'.
+$
+$ Pour le déchiffrement, la lettre 'L' combinée avec la même
+$ rotation, redonne (modulo 26) 'C' => 'R'.
+$
+$ Les valeurs initiales des compteurs
+$
+$   compteur_0
+$   compteur_1
+$   compteur_2
+$   compteur_3
+$   compteur_4
+$
+$ étaient généralement transmisent avec le message (c'est la
+$ configuration interne de la machine qui est secrète) mais,
+$ par contre, elles ne peuvent pas être réutilisées.
+$
+$ Bien entendu la version C du programme est plus courte
+$ mais cela fait un beau programme Orvet.
+$
+$ J'écrirai prochainement un petit texte détaillant le
+$ fonctionnement de cette belle machine qui permettra de 
+$ mieux comprendre le présent programme... Stay tuned!
+$
+$ En attendant : https://fr.wikipedia.org/wiki/C-36.
+$
+$ Voir aussi :
+$
+$   https://www.youtube.com/watch?v=sVy59ZrOrw4
+$   https://www.youtube.com/watch?v=TxEkMiAS0Po
+$
+$ (ces vidéos portent sur la machine américaine M-209 qui
+$ correspond à une C-36 à 6 roues crantées au lieu de 5).
+$
+$ 
+
+entier valeur_bin
+
+booléen validation_sup
+booléen validation_inf
+booléen validation_bin
+
+procédure vérifier_valeur_binaire début
+    minorer valeur_bin par -1 dans validation_inf
+    majorer valeur_bin par 2 dans validation_sup
+    conjoindre validation_inf et validation_sup dans validation_bin
+    vérifier validation_bin
+fin
+
+procédure lire_valeur_binaire début
+    lire valeur_bin
+    appeler vérifier_valeur_binaire
+fin
+
+$ Les roues sont numérotées de gauche à droite.
+dictionnaire roue_0
+dictionnaire roue_1
+dictionnaire roue_2
+dictionnaire roue_3
+dictionnaire roue_4
+
+entier i
+entier j
+
+procédure lire_configuration_roue_0 début
+    pour i de 0 à 24 faire
+        appeler lire_valeur_binaire
+        associer i à valeur_bin dans roue_0
+    fin
+fin
+
+procédure lire_configuration_roue_1 début
+    pour i de 0 à 22 faire
+        appeler lire_valeur_binaire
+        associer i à valeur_bin dans roue_1
+    fin
+fin
+
+procédure lire_configuration_roue_2 début
+    pour i de 0 à 20 faire
+        appeler lire_valeur_binaire
+        associer i à valeur_bin dans roue_2
+    fin
+fin
+
+procédure lire_configuration_roue_3 début
+    pour i de 0 à 18 faire
+        appeler lire_valeur_binaire
+        associer i à valeur_bin dans roue_3
+    fin
+fin
+
+procédure lire_configuration_roue_4 début
+    pour i de 0 à 16 faire
+        appeler lire_valeur_binaire
+        associer i à valeur_bin dans roue_4
+    fin
+fin
+
+procédure lire_configuration_roues début
+    appeler lire_configuration_roue_0
+    appeler lire_configuration_roue_1
+    appeler lire_configuration_roue_2
+    appeler lire_configuration_roue_3
+    appeler lire_configuration_roue_4
+fin
+
+$ Le tambour de la machine revient à fixer 25 nombres sur 
+$ 5 bits avec au plus 2 bits à 1. Les dictionnaires ci-après
+$ représentent ces nombres par colonnes de gauche 
+$ (poids forts) à droite (poids faibles)
+dictionnaire tambour_0
+dictionnaire tambour_1
+dictionnaire tambour_2
+dictionnaire tambour_3
+dictionnaire tambour_4
+
+entier somme_bits
+booléen validation_somme
+
+procédure lire_configuration_tambour début
+    pour i de 1 à 25 faire
+        affecter 0 à somme_bits
+        appeler lire_valeur_binaire 
+        associer i à valeur_bin dans tambour_0
+        ajouter valeur_bin à somme_bits dans somme_bits
+        appeler lire_valeur_binaire 
+        associer i à valeur_bin dans tambour_1
+        ajouter valeur_bin à somme_bits dans somme_bits
+        appeler lire_valeur_binaire 
+        associer i à valeur_bin dans tambour_2
+        ajouter valeur_bin à somme_bits dans somme_bits
+        appeler lire_valeur_binaire 
+        associer i à valeur_bin dans tambour_3
+        ajouter valeur_bin à somme_bits dans somme_bits
+        appeler lire_valeur_binaire 
+        associer i à valeur_bin dans tambour_4
+        ajouter valeur_bin à somme_bits dans somme_bits
+        $ Vérification qu'il y a bien au plus 2 bits à 1 :
+        majorer somme_bits par 3 dans validation_somme
+        vérifier validation_somme
+    fin
+fin
+
+dictionnaire table_tambour
+
+entier b0
+entier b1
+entier b2
+entier b3
+entier b4
+
+entier v
+entier compteur_prod
+entier compteur_inc
+
+booléen inc_roue_chiffrante
+
+$ En langage moderne, le fonctionnement de la machine
+$ se résume à prendre les 5 bits de sortie des 5 registres à
+$ décalage que sont les 5 roues crantées et à les utiliser
+$ pour piloter les rotations de la roue chiffrante, au travers 
+$ du tambour. L'effet du tambour peut être précalculé pour 
+$ les 32 valeurs possibles des sorties des registres, ainsi 
+$ son effet consiste à récupérer le nombre de tours de
+$ roue chiffrante à faire - ce qui correspond à une lettre à 
+$ ajouter à celle du message à chiffrer - par une indirection
+$ dans une table à 32 entrées. L'objet de la procédure
+$ est justement de calculer cette table.
+procédure tabuler_tambour début
+    affecter 0 à i
+    $ Un petit test de boucles imbriquées :-)
+    pour b0 de 0 à 1 faire
+     pour b1 de 0 à 1 faire
+      pour b2 de 0 à 1 faire
+       pour b3 de 0 à 1 faire
+        pour b4 de 0 à 1 faire
+            $ i contient 16b0+8b1+4b2+2b3+b4
+            affecter 0 à compteur_inc
+            pour j de 1 à 25 faire
+                affecter 0 à compteur_prod
+                accéder tambour_0 avec j dans v
+                multiplier v par b0 dans v
+                ajouter v à compteur_prod dans compteur_prod
+                accéder tambour_1 avec j dans v
+                multiplier v par b1 dans v
+                ajouter v à compteur_prod dans compteur_prod
+                accéder tambour_2 avec j dans v
+                multiplier v par b2 dans v
+                ajouter v à compteur_prod dans compteur_prod
+                accéder tambour_3 avec j dans v
+                multiplier v par b3 dans v
+                ajouter v à compteur_prod dans compteur_prod
+                accéder tambour_4 avec j dans v
+                multiplier v par b4 dans v
+                ajouter v à compteur_prod dans compteur_prod
+                minorer compteur_prod par 0 dans inc_roue_chiffrante
+                si inc_roue_chiffrante alors
+                    ajouter 1 à compteur_inc dans compteur_inc
+                fin
+            fin
+            associer i à compteur_inc dans table_tambour
+            ajouter 1 à i dans i
+        fin
+       fin
+      fin
+     fin
+    fin
+fin
+
+entier compteur_0
+entier compteur_1
+entier compteur_2
+entier compteur_3
+entier compteur_4
+entier lettre_chiffrante
+
+$ La procédure suivante implémente la fonction de 
+$ de génération du flux de clef - en langage moderne. Pour 
+$ ce faire, elle récupère les 5 bits de sortie des registres à 
+$ décalage (les roues crantées) pour calculer la valeur
+$ d'indirection du tableau représentant le tambour. Cela 
+$ donne ainsi la lettre à ajouter à celle du message clair
+$ (ou à soustraire quand on déchiffre). Cf. début de ce fichier.
+procédure lettre_suivante début
+    accéder roue_0 avec compteur_0 dans b0
+    accéder roue_1 avec compteur_1 dans b1
+    accéder roue_2 avec compteur_2 dans b2
+    accéder roue_3 avec compteur_3 dans b3
+    accéder roue_4 avec compteur_4 dans b4
+    
+    affecter 0 à i
+    multiplier b0 par 16 dans b0
+    ajouter b0 à i dans i
+    multiplier b1 par 8 dans b1
+    ajouter b1 à i dans i
+    multiplier b2 par 4 dans b2
+    ajouter b2 à i dans i
+    multiplier b3 par 2 dans b3
+    ajouter b3 à i dans i
+    ajouter b4 à i dans i
+    accéder table_tambour avec i dans lettre_chiffrante
+
+    ajouter 1 à compteur_0 dans compteur_0
+    réduire compteur_0 modulo 25 dans compteur_0
+    ajouter 1 à compteur_1 dans compteur_1
+    réduire compteur_1 modulo 23 dans compteur_1
+    ajouter 1 à compteur_2 dans compteur_2
+    réduire compteur_2 modulo 21 dans compteur_2
+    ajouter 1 à compteur_3 dans compteur_3
+    réduire compteur_3 modulo 19 dans compteur_3
+    ajouter 1 à compteur_4 dans compteur_4
+    réduire compteur_4 modulo 17 dans compteur_4
+fin
+
+appeler lire_configuration_roues
+appeler lire_configuration_tambour
+appeler tabuler_tambour
+
+entier nombre_lettres
+entier k
+
+lire compteur_0
+lire compteur_1
+lire compteur_2
+lire compteur_3
+lire compteur_4
+réduire compteur_0 modulo 25 dans compteur_0
+réduire compteur_1 modulo 23 dans compteur_1
+réduire compteur_2 modulo 21 dans compteur_2
+réduire compteur_3 modulo 19 dans compteur_3
+réduire compteur_4 modulo 17 dans compteur_4
+
+lire nombre_lettres
+
+pour k de 1 à nombre_lettres faire
+    appeler lettre_suivante
+    montrer lettre_chiffrante
+fin
