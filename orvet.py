@@ -20,6 +20,7 @@
 
 import sys
 import random
+import codecs
 
 version='0.1'
 program=[]
@@ -33,7 +34,7 @@ interactive=True
 def load_program(prog_name):
     global program
     print('Chargement du programme')
-    program = open(prog_name).readlines()
+    program = codecs.open(prog_name, 'r', encoding='utf-8').readlines()
     print(len(program),'lignes chargées')
         
 def print_program():
