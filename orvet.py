@@ -267,7 +267,7 @@ def do_bool_assign(ip,source,dest,skip):
     
 def parse_assign_instr(ip,tokens,skip):
     if tokens[0]=='affecter':
-        if len(tokens)!=4 or tokens[2]!='à':
+        if len(tokens)!=4 or (tokens[2]!='à' and tokens[2]!='dans'):
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'affectation incorrecte')
             return -1
         if not assert_var_def(ip,tokens[3]):
@@ -298,7 +298,7 @@ def do_int_add(ip,source1,source2,dest,skip):
     
 def parse_add_instr(ip,tokens,skip):
     if tokens[0]=='ajouter':
-        if len(tokens)!=6 or tokens[2]!='à' or tokens[4]!='dans':
+        if len(tokens)!=6 or (tokens[2]!='à' and tokens[2]!='et' and tokens[2]!='avec') or tokens[4]!='dans':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'addition incorrecte')
             return -1
         if not assert_var_def(ip,tokens[5]):
@@ -327,7 +327,7 @@ def do_int_mul(ip,source1,source2,dest,skip):
         
 def parse_mul_instr(ip,tokens,skip):
     if tokens[0]=='multiplier':
-        if len(tokens)!=6 or tokens[2]!='par' or tokens[4]!='dans':
+        if len(tokens)!=6 or (tokens[2]!='par' and tokens[2]!='à' and tokens[2]!='et' and tokens[2]!='avec') or tokens[4]!='dans':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de multiplication incorrecte')
             return -1
         if not assert_var_def(ip,tokens[5]):
@@ -539,7 +539,7 @@ def do_int_cmp(ip,source1,source2,dest,skip):
         
 def parse_cmp_instr(ip,tokens,skip):
     if tokens[0]=='comparer':
-        if len(tokens)!=6 or tokens[2]!='avec' or tokens[4]!='dans':
+        if len(tokens)!=6 or (tokens[2]!='avec' and tokens[2]!='et' and tokens[2]!='à') or tokens[4]!='dans':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de comparaison incorrecte')
             return -1
         if not assert_var_def(ip,tokens[5]):
@@ -568,7 +568,7 @@ def do_int_neq(ip,source1,source2,dest,skip):
 
 def parse_neq_instr(ip,tokens,skip):
     if tokens[0]=='différencier':
-        if len(tokens)!=6 or tokens[2]!='avec' or tokens[4]!='dans':
+        if len(tokens)!=6 or (tokens[2]!='avec' and tokens[2]!='et' and tokens[2]!='à') or tokens[4]!='dans':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de différenciation incorrecte')
             return -1
         if not assert_var_def(ip,tokens[5]):
@@ -655,7 +655,7 @@ def do_bool_disj(ip,source1,source2,dest,skip):
 
 def parse_disj_instr(ip,tokens,skip): # I.e., inclusive-OR
     if tokens[0]=='disjoindre':
-        if len(tokens)!=6 or tokens[2]!='et' or tokens[4]!='dans':
+        if len(tokens)!=6 or (tokens[2]!='et' and tokens[2]!='avec') or tokens[4]!='dans':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de disjonction (OU logique) incorrecte')
             return -1
         if not assert_var_def(ip,tokens[5]):
@@ -684,7 +684,7 @@ def do_bool_conj(ip,source1,source2,dest,skip):
 
 def parse_conj_instr(ip,tokens,skip): # I.e., AND
     if tokens[0]=='conjoindre':
-        if len(tokens)!=6 or tokens[2]!='et' or tokens[4]!='dans':
+        if len(tokens)!=6 or (tokens[2]!='et' and tokens[2]!='avec') or tokens[4]!='dans':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de conjonction (ET logique) incorrecte')
             return -1
         if not assert_var_def(ip,tokens[5]):
@@ -1036,7 +1036,7 @@ def parse_insert_instr(ip,tokens,skip):
 
 def parse_bind_instr(ip,tokens,skip):
     if tokens[0]=='associer':
-        if len(tokens)!=6 or tokens[2]!='à' or tokens[4]!='dans':
+        if len(tokens)!=6 or (tokens[2]!='à' and tokens[2]!='avec') or tokens[4]!='dans':
             print('Erreur ligne',line_num(ip),': syntaxe d\'instruction d\'association incorrecte')
             return -1
         if not assert_var_def(ip,tokens[5]):
