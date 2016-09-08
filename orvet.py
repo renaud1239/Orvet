@@ -21,6 +21,7 @@
 import sys
 import random
 import codecs
+import time
 
 version='0.1'
 program=[]
@@ -30,6 +31,7 @@ dict_vars=dict()
 proc_table=dict()
 trace=False
 interactive=True
+chrono=False
 
 def load_program(prog_name):
     global program
@@ -1184,7 +1186,101 @@ def parse_on_instr(ip,tokens,skip):
         return new_ip+1
     else:
         return -1
+
+loop_t0=time.time()           
+tenths_ctr=0
+period_duration_in_tenths=0
+
+def delayUntilNextPeriod():
+    global tenths_ctr,t0
+    tenths_ctr=tenths_ctr+period_duration_in_tenths
+    t=time.time()-loop_t0
+    delay=tenths_ctr/10-t
+    if delay<0:
+        return -1
+    time.sleep(delay)
+                
+def parse_realtime_instr(ip,tokens,skip):
+    global t0,period_duration_in_tenths
+    if len(tokens)<2:
+        return -1
+    if tokens[0]=='tous' and tokens[1]=='les':
+        if len(tokens)!=5 or tokens[3]!='dixièmes' or tokens[4]!='faire':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de bouclage temps réel incorrecte')
+            return -1
+        if not check_int_value(tokens[2]):
+            print('Erreur ligne',line_num(ip),':',tokens[2],'n\'est pas une valeur de période valide')
+            return -1
+        new_ip=0
+        if skip:
+            new_ip=parse_instr_block(ip+1,skip)
+            if new_ip==-1:
+                return -1
+        else:
+            # A real-time loop never ends.
+            period_duration_in_tenths=get_int_value(tokens[2])
+            loop_t0=time.time()
+            if period_duration_in_tenths<1:
+                print('Erreur ligne',line_num(ip),'la période d\'une boucle temps réel doit être >= 1 dixième')
+                return -1
+            if trace:
+                print(line_num(ip),'Démarrage boucle temps réel de période',period_duration_in_tenths,'dixièmes à',t0)
+            while True:
+                if trace:
+                    print(line_num(ip),'Exécution corps de boucle temps réel à',time.time()-t0)
+                new_ip=parse_instr_block(ip+1,skip)
+                if new_ip==-1:
+                    print('Interruption boucle de la ligne',line_num(ip))
+                    return -1
+                if delayUntilNextPeriod()==-1:
+                    print('Erreur ligne',line_num(ip),'violation d\'échéance temps réel')
+                    return -1
+    return -1
+
+t0_prog=time.time()
+
+def get_exe_time():
+    t=time.time();
+    return int(round(10.0*(t-t0_prog)))
         
+def print_exe_time():
+    print('Temps d\'exécution :',get_exe_time(),'dixièmes')
+
+def parse_chrono_instr(ip,tokens,skip):
+    if tokens[0]=='chronométrer':
+        if len(tokens)!=3 or tokens[1]!='dans':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de chronométrage incorrecte')
+            return -1
+        if not assert_var_def(ip,tokens[2]):
+            return -1
+        if not skip:
+            if is_int_var(tokens[2]):
+                val=get_exe_time()
+                int_vars[tokens[2]]=int(val)
+                if trace:
+                    print(line_num(ip),'- Chronométrage du temps d\'exécution dans l\'entier',tokens[1])
+        return ip+1
+    else:
+        return -1
+
+def parse_delay_instr(ip,tokens,skip):
+    if tokens[0]=='temporiser':
+        if len(tokens)!=4 or tokens[1]!='de' or tokens[3]!='dixièmes':
+            print('Erreur ligne',line_num(ip),': syntaxe d\'instruction de temporisation incorrecte')
+            return -1
+        if not check_int_value(tokens[2]):
+            print('Erreur ligne',line_num(ip),':',tokens[2],'n\'est pas une valeur de temporisation valide')
+            return -1
+        if not skip:
+            delay=get_int_value(tokens[2])
+            if delay<0:
+                print('Erreur ligne',line_num(ip),': valeur de temporisation négative')
+            time.sleep(delay/10.0)
+            if trace:
+                print(line_num(ip),'- Temporisation de',delay,'dixièmes à',get_exe_time(),'dixièmes')
+        return ip+1
+    else:
+        return -1
         
 def exec_line(ip,skip):
     tokens=program[ip].split()
@@ -1307,6 +1403,15 @@ def exec_line(ip,skip):
         new_ip=parse_on_instr(ip,tokens,skip)
         if new_ip!=-1:
             return new_ip
+        new_ip=parse_realtime_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_chrono_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
+        new_ip=parse_delay_instr(ip,tokens,skip)
+        if new_ip!=-1:
+            return new_ip
         print('Erreur à la ligne',line_num(ip),': instruction inconnue ou séquence interrompue')
         return -1
     return -1
@@ -1314,10 +1419,14 @@ def exec_line(ip,skip):
 def end_exec():
     print()
     print('Fin de l\'exécution')
+    print()
     if trace:
         print_memory()
-    if interactive:
         print()
+    if chrono:
+        print_exe_time()
+        print()
+    if interactive:
         x=input('Appuyer sur Entrée pour fermer...')
     sys.exit(1)
     
@@ -1332,7 +1441,7 @@ def exec_program():
 print('Orvet version',version)
 
 if len(sys.argv)<2:
-    print('Utilisation :',sys.argv[0],'[fichier].orv -trace (optionel) -non-interactif (optionel)')
+    print('Utilisation :',sys.argv[0],'[fichier].orv -trace (optionnel) -non-interactif (optionnel) -chrono (optionnel)')
     sys.exit(1)
 
 try:    
@@ -1350,12 +1459,16 @@ if len(sys.argv)>2:
         if sys.argv[i]=='-non-interactif':
             interactive=False
             unknown_option=False
+        if sys.argv[i]=='-chrono':
+            chrono=True
+            unknown_option=False
         if unknown_option:
             print('Option inconnue :',sys.argv[2],'(ignorée)')
 
 # print_program()
 
 try:
+    t0_prog=time.time()
     exec_program()
 except KeyboardInterrupt:
     print('\nInterruption utilisateur !')

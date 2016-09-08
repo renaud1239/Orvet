@@ -1,0 +1,29 @@
+
+entier compteur
+entier temps
+
+booléen arrêt
+
+chronométrer dans temps
+
+écrire Démarrage boucle temps réel à $temps dixièmes
+
+tous les 5 dixièmes faire
+    
+    chronométrer dans temps
+    
+    écrire Compteur = $compteur à $temps dixièmes
+
+    ajouter 1 à compteur dans compteur
+    
+    comparer compteur à 10 dans arrêt
+    
+    si arrêt alors
+
+        temporiser de 10 dixièmes
+    
+        arrêter
+        
+    fin
+    
+fin

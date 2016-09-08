@@ -1,0 +1,20 @@
+
+entier compteur
+
+booléen arrêt
+
+tous les 2 dixièmes faire
+    
+    montrer compteur
+    
+    ajouter 1 à compteur dans compteur
+    
+    comparer compteur à 50 dans arrêt
+    
+    si arrêt alors
+    
+        arrêter
+        
+    fin
+    
+fin
