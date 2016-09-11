@@ -3,13 +3,13 @@ entier compteur
 
 booléen arrêt
 
-tous les 2 dixièmes faire
+tous les 10 dixièmes faire
     
     montrer compteur
     
     ajouter 1 à compteur dans compteur
     
-    comparer compteur à 50 dans arrêt
+    comparer compteur à 10 dans arrêt
     
     si arrêt alors
     

@@ -8,7 +8,7 @@ chronométrer dans temps
 
 écrire Démarrage boucle temps réel à $temps dixièmes
 
-tous les 5 dixièmes faire
+tous les 10 dixièmes faire
     
     chronométrer dans temps
     
@@ -20,8 +20,12 @@ tous les 5 dixièmes faire
     
     si arrêt alors
 
-        temporiser de 10 dixièmes
-    
+        temporiser de 50 dixièmes
+
+        chronométrer dans temps
+        
+        écrire Fin boucle à $temps dixièmes
+        
         arrêter
         
     fin

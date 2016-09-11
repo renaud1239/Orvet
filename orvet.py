@@ -1192,7 +1192,7 @@ tenths_ctr=0
 period_duration_in_tenths=0
 
 def delayUntilNextPeriod():
-    global tenths_ctr,t0
+    global tenths_ctr,loop_t0
     tenths_ctr=tenths_ctr+period_duration_in_tenths
     t=time.time()-loop_t0
     delay=tenths_ctr/10-t
@@ -1201,7 +1201,7 @@ def delayUntilNextPeriod():
     time.sleep(delay)
                 
 def parse_realtime_instr(ip,tokens,skip):
-    global t0,period_duration_in_tenths
+    global loop_t0,period_duration_in_tenths
     if len(tokens)<2:
         return -1
     if tokens[0]=='tous' and tokens[1]=='les':
@@ -1225,6 +1225,9 @@ def parse_realtime_instr(ip,tokens,skip):
                 return -1
             if trace:
                 print(line_num(ip),'Démarrage boucle temps réel de période',period_duration_in_tenths,'dixièmes à',t0)
+            if delayUntilNextPeriod()==-1:
+                print('Erreur ligne',line_num(ip),'violation d\'échéance temps réel sur 1ère itération')
+                return -1
             while True:
                 if trace:
                     print(line_num(ip),'Exécution corps de boucle temps réel à',time.time()-t0)
