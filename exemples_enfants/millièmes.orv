@@ -1,0 +1,32 @@
+
+$ Programme écrit le 15 octobre 2016 avec Clément pour vérifier
+$ son calcul spontanné du nombre de millièmes de seconde dans
+$ un siècle !
+
+entier nombre_millièmes
+
+$ Il y 1000 millièmes dans une seconde
+affecter 1000 à nombre_millièmes 
+
+multiplier nombre_millièmes par 60 dans nombre_millièmes
+écrire Il y a $nombre_millièmes millièmes dans 1 minutes
+
+multiplier nombre_millièmes par 60 dans nombre_millièmes
+écrire Il y a $nombre_millièmes millièmes dans 1 heure
+
+multiplier nombre_millièmes par 24 dans nombre_millièmes
+écrire Il y a $nombre_millièmes millièmes dans 1 jour
+
+entier nombre_jours_par_siècle
+
+multiplier 365 par 100 dans nombre_jours_par_siècle
+$ Ca c'est pour les années bissextiles
+ajouter 25 à nombre_jours_par_siècle dans nombre_jours_par_siècle
+écrire Il y a $nombre_jours_par_siècle jours dans 1 siècle
+
+multiplier nombre_millièmes par nombre_jours_par_siècle dans nombre_millièmes
+écrire Il y a $nombre_millièmes millièmes dans 1 siècle
+
+multiplier nombre_millièmes par 10 dans nombre_millièmes
+écrire Il y a $nombre_millièmes millièmes dans 1 millénaire
+

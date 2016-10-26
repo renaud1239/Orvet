@@ -24,10 +24,20 @@ entier état_i
 entier état_j
 entier octet_chiffrant
 
+booléen assez_grand
+booléen assez_petit
+
+procédure vérifier_valeur_clef début
+    minorer c par -1 dans assez_grand
+    vérifier assez_grand
+    majorer c par 256 dans assez_petit
+    vérifier assez_petit
+fin
+
 procédure lire_clef début
     pour i de 0 à 15 faire
         lire c
-        réduire c modulo 256 dans c
+        appeler vérifier_valeur_clef
         associer i à c dans clef
     fin
 fin

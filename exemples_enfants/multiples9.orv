@@ -1,0 +1,42 @@
+
+$ >>> x=0
+$ >>> while x<=200:
+$ ...   if x>=137:
+$ ...     print(x)
+$ ...   x=x+9
+$ ...
+$ 144
+$ 153
+$ 162
+$ 171
+$ 180
+$ 189
+$ 198
+$
+$ Mais... En Orvet :-)
+$
+
+entier x
+
+booléen assez_grand
+booléen trop_petit
+
+affecter 0 à x
+affecter vrai à trop_petit
+affecter faux à assez_grand
+
+tant que trop_petit faire
+
+    majorer 136 par x dans assez_grand
+    
+    si assez_grand alors
+    
+        montrer x
+                
+    fin
+    
+    ajouter 9 à x dans x
+    
+    majorer x par 201 dans trop_petit
+
+fin

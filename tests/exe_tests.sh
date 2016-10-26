@@ -109,6 +109,10 @@ echo '----------------------------------------'
 
 ./exe_test.sh ../exemples_enfants/division_inf.orv entrées/division_inf.txt sorties/division_inf.ref
 
+./exe_test.sh ../exemples_enfants/multiples9.orv entrées/vide.txt sorties/multiples9.ref
+
+./exe_test.sh ../exemples_enfants/millièmes.orv entrées/vide.txt sorties/millièmes.ref
+
 ./exe_test.sh ../exemples_avancés/euler.orv entrées/euler.txt sorties/euler.ref
 
 ./exe_test.sh ../exemples_avancés/fibonacci-rec.orv entrées/fibonacci-rec.txt sorties/fibonacci-rec.ref
@@ -120,5 +124,9 @@ echo '----------------------------------------'
 ./exe_test.sh ../exemples_avancés/hanoi.orv entrées/hanoi-2.txt sorties/hanoi-2.ref
 
 ./exe_test.sh ../exemples_avancés/RC4.orv entrées/RC4.txt sorties/RC4.ref
+
+./exe_test.sh ../exemples_avancés/RC4.orv entrées/RC4-2.txt sorties/RC4-2.ref
+
+./exe_test.sh ../exemples_avancés/RC4.orv entrées/RC4-3.txt sorties/RC4-3.ref
 
 ./exe_test.sh ../exemples_avancés/C-36.orv ../exemples_avancés/C-36.config sorties/C-36.ref
