@@ -1,0 +1,13 @@
+
+$ Ecrit le "code" Orvet i.e. le codage entier <-> caractère utilisé pour le langage.
+
+entier i
+
+écrire Voici le "code" Orvet :
+écrire =======================
+
+pour i de 0 à 63 faire
+
+    écrire $i - @i
+    
+fin

@@ -1,0 +1,34 @@
+
+$ Ecrit un ensemble de caractères sous la forme d'une chaine sans espace.
+
+dictionnaire chaîne
+
+écrire Entrez des caractères, -1 termine
+
+entier i
+entier valeur
+booléen continuer
+
+affecter vrai à continuer
+
+tant que continuer faire
+
+    lire valeur
+    différencier valeur à -1 dans continuer
+    si continuer alors
+        associer i à valeur dans chaîne
+    fin
+    ajouter 1 à i dans i
+    
+fin
+
+sur tout  i de chaîne faire
+
+    accéder chaîne avec i dans valeur
+
+    écrire pdsép @valeur pdrc
+
+fin
+
+écrire
+

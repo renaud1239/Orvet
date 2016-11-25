@@ -1,0 +1,47 @@
+
+$ Imprime le fameux carré de Vigenère.
+$
+$ I.e., la table d'addition (des lettres) modulo 26.
+$
+$ C'est un programme qui commence à faire des entrées/sorties (un
+$ tout petit peu) sophistiquées, donc il devient difficile à lire !
+$
+$ Malheureusement...
+$
+
+entier i
+entier j
+
+entier s
+
+écrire + | pdrc
+pour i de 0 à 25 faire
+    ajouter 10 à i dans s
+    écrire @s pdrc
+fin
+écrire
+
+écrire - + pdrc
+pour i de 0 à 25 faire
+    écrire - pdrc
+fin
+écrire    
+
+
+pour i de 0 à 25 faire
+
+    ajouter 10 à i dans s
+    écrire @s | pdrc
+
+    pour j de 0 à 25 faire
+
+        ajouter i à j dans s
+        réduire s modulo 26 dans s
+        ajouter 10 à s dans s
+        écrire @s pdrc
+    
+    fin
+    
+    écrire
+    
+fin

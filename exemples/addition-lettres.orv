@@ -1,0 +1,46 @@
+
+$ Additions modulo 26, avec des lettres...
+
+entier lettre1
+entier lettre2
+
+booléen terminaison
+booléen acceptation
+
+écrire Entrez des lettres, -1 termine le programme
+
+tant que vrai faire
+
+    lire lettre1
+    
+    comparer lettre1 à -1 dans terminaison
+
+    si terminaison alors
+        arrêter
+    fin
+    
+    lire lettre2
+
+    soustraire 10 à lettre1 dans lettre1
+    soustraire 10 à lettre2 dans lettre2
+    
+    minorer lettre1 par -1 dans acceptation
+    vérifier acceptation
+    
+    minorer lettre2 par -1 dans acceptation
+    vérifier acceptation
+    
+    majorer lettre1 par 26 dans acceptation
+    vérifier acceptation
+    
+    majorer lettre2 par 26 dans acceptation
+    vérifier acceptation
+
+    ajouter lettre1 à lettre2 dans lettre1
+    réduire lettre1 modulo 26 dans lettre1
+    ajouter 10 à lettre1 dans lettre1
+    
+    écrire Somme = @lettre1
+    
+fin
+

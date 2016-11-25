@@ -107,11 +107,23 @@ echo '----------------------------------------'
 
 ./exe_test.sh ../exemples/binaire.orv entrées/binaire-2.txt sorties/binaire-2.ref
 
+./exe_test.sh ../exemples/vigenère.orv entrées/vide.txt sorties/vigenère.ref
+
+./exe_test.sh ../exemples/vigenère-compact.orv entrées/vide.txt sorties/vigenère-compact.ref
+
+./exe_test.sh ../exemples/code-orvet.orv entrées/vide.txt sorties/code-orvet.ref
+
+./exe_test.sh ../exemples/addition-lettres.orv entrées/addition-lettres.txt sorties/addition-lettres.ref
+
+./exe_test.sh ../exemples/chaine.orv entrées/chaine.txt sorties/chaine.ref
+
 ./exe_test.sh ../exemples_enfants/division_inf.orv entrées/division_inf.txt sorties/division_inf.ref
 
 ./exe_test.sh ../exemples_enfants/multiples9.orv entrées/vide.txt sorties/multiples9.ref
 
 ./exe_test.sh ../exemples_enfants/millièmes.orv entrées/vide.txt sorties/millièmes.ref
+
+./exe_test.sh ../exemples_enfants/alphabet.orv entrées/vide.txt sorties/alphabet.ref
 
 ./exe_test.sh ../exemples_avancés/euler.orv entrées/euler.txt sorties/euler.ref
 

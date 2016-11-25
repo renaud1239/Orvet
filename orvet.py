@@ -53,11 +53,37 @@ def print_int_vars():
     for var,val in sorted(int_vars.items()):
         print(var,'=',val)
 
+def int_to_char(v):
+    if v>=0 and v<10:
+        return chr(v+ord('0'))
+    if v>=10 and v<36:
+        return chr(v-10+ord('A'))
+    if v>=36 and v<62:
+        return chr(v-36+ord('a'))
+    if v==62:
+        return ' '
+    if v==63:
+        return '.'
+    return '?'
+
+def char_to_int(c):
+    if c>='0' and c<='9':
+        return ord(c)-ord('0')
+    if c>='A' and c<='Z':
+        return ord(c)-ord('A')+10
+    if c>='a' and c<='z':
+        return ord(c)-ord('a')+36
+    if c=='_' or c==' ':
+        return 62
+    if c=='.':
+        return 63
+    return -1
+        
 def bool_to_str(b):
     if b==True:
         return 'vrai'
     return 'faux'
-        
+    
 def print_bool_vars():
     print('Booléens :')
     for var,val in sorted(bool_vars.items()):
@@ -98,6 +124,21 @@ def check_int(token):
     if token[0]=='-':
         if token.split('-')[1].isdecimal():
             return True
+    return False
+    
+def check_char(token):
+    if len(token)!=1:
+        return False
+    if token>='0' and token<='9':
+        return True
+    if token>='A' and token<='Z':
+        return True
+    if token>='a' and token<='z':
+        return True
+    if token=='_':
+        return True
+    if token=='.':
+        return True
     return False
         
 def is_int_var(var):
@@ -186,11 +227,14 @@ def parse_read_instr(ip,tokens,skip):
             return -1
         if not skip:
             if is_int_var(tokens[1]):
-                val=input('Valeur de l\'entier '+tokens[1]+' ? ')
-                while not check_int(val):
-                    print('\'',val,'\' n\'est pas un entier !')
+                val=input('Valeur de l\'entier '+tokens[1]+' ? ').strip()
+                while not check_int(val) and not check_char(val):
+                    print('\'',val,'\' n\'est ni un entier ni un caractère !')
                     val=input('Valeur de l\'entier '+tokens[1]+' ? ')
-                int_vars[tokens[1]]=int(val)
+                if check_int(val):    
+                    int_vars[tokens[1]]=int(val)
+                if check_char(val):
+                    int_vars[tokens[1]]=char_to_int(val)                    
                 if trace:
                     print(line_num(ip),'- Lecture de la valeur de l\'entier',tokens[1])
         return ip+1
@@ -759,20 +803,33 @@ def parse_write_instr(ip,tokens,skip):
     if tokens[0]=='écrire':
         if not skip:
             no_cr=False
+            sep_char=' '
             for i in range(1,len(tokens)):
                 if tokens[i][0]!='$':
-                    if i==len(tokens)-1 and tokens[i]=='pdrc':
-                        no_cr=True
+                    if tokens[i][0]!='@':
+                        if i==len(tokens)-1 and tokens[i]=='pdrc':
+                            no_cr=True
+                        else:
+                            if i==1 and tokens[i]=='pdsép':
+                                sep_char=''
+                            else:
+                                print(tokens[i],'',sep=sep_char,end='')
                     else:
-                        print(tokens[i],'',end='')
+                        varname=tokens[i].split('@')[1]
+                        if not assert_var_def(ip,varname):
+                            return -1
+                        if not is_int_var(varname):
+                            print('Erreur ligne',line_num(ip),': variable non entière utilisée avec opérateur @')
+                            return -1
+                        print(int_to_char(int_vars[varname]),'',sep=sep_char,end='')
                 else:
                     varname=tokens[i].split('$')[1]
                     if not assert_var_def(ip,varname):
                         return -1
                     if is_int_var(varname):
-                        print(int_vars[varname],'',end='')
+                        print(int_vars[varname],'',sep=sep_char,end='')
                     if is_bool_var(varname):
-                        print(bool_to_str(bool_vars[varname]),'',end='')
+                        print(bool_to_str(bool_vars[varname]),'',sep=sep_char,end='')
             if not no_cr:
                 print()
             if trace:

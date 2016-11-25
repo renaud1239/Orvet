@@ -1,0 +1,13 @@
+
+entier i
+entier l
+
+affecter 10 à l
+
+pour i de 1 à 26 faire
+
+    écrire $i - @l
+    
+    ajouter 1 à l dans l
+    
+fin
