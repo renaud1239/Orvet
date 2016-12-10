@@ -117,6 +117,8 @@ echo '----------------------------------------'
 
 ./gen_test.sh ../exemples/chaine.orv entrées/chaine.txt sorties/chaine.ref
 
+./gen_test.sh ../exemples/chaine.orv entrées/chaine-2.txt sorties/chaine-2.ref
+
 ./gen_test.sh ../exemples_enfants/division_inf.orv entrées/division_inf.txt sorties/division_inf.ref
 
 ./gen_test.sh ../exemples_enfants/multiples9.orv entrées/vide.txt sorties/multiples9.ref

@@ -22,7 +22,7 @@ tant que continuer faire
     
 fin
 
-sur tout  i de chaîne faire
+sur tout i de chaîne faire
 
     accéder chaîne avec i dans valeur
 

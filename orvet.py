@@ -64,6 +64,30 @@ def int_to_char(v):
         return ' '
     if v==63:
         return '.'
+    if v==64:
+        return 'à'
+    if v==65:
+        return 'â'
+    if v==66:
+        return 'ç'
+    if v==67:
+        return 'é'
+    if v==68:
+        return 'è'
+    if v==69:
+        return 'ê'
+    if v==70:
+        return 'ë'
+    if v==71:
+        return 'î'
+    if v==72:
+        return 'ï'
+    if v==73:
+        return 'ô'
+    if v==74:
+        return 'ö'
+    if v==75:
+        return 'ù'
     return '?'
 
 def char_to_int(c):
@@ -77,6 +101,30 @@ def char_to_int(c):
         return 62
     if c=='.':
         return 63
+    if c=='à':
+        return 64
+    if c=='â':
+        return 65 
+    if c=='ç':
+        return 66
+    if c=='é':
+        return 67 
+    if c=='è':
+        return 68 
+    if c=='ê':
+        return 69 
+    if c=='ë':
+        return 70 
+    if c=='î':
+        return 71 
+    if c=='ï':
+        return 72 
+    if c=='ô':
+        return 73 
+    if c=='ö':
+        return 74 
+    if c=='ù':
+        return 75
     return -1
         
 def bool_to_str(b):
@@ -138,6 +186,30 @@ def check_char(token):
     if token=='_':
         return True
     if token=='.':
+        return True
+    if token=='à':
+        return True
+    if token=='â':
+        return True 
+    if token=='ç':
+        return True
+    if token=='é':
+        return True 
+    if token=='è':
+        return True 
+    if token=='ê':
+        return True 
+    if token=='ë':
+        return True 
+    if token=='î':
+        return True 
+    if token=='ï':
+        return True 
+    if token=='ô':
+        return True 
+    if token=='ö':
+        return True 
+    if token=='ù':
         return True
     return False
         
@@ -1228,7 +1300,7 @@ def parse_on_instr(ip,tokens,skip):
                 return -1
         else:
             if len(dict_vars[tokens[4]])==0:
-                new_ip=parse_instr_block(ip+1,skip)
+                new_ip=parse_instr_block(ip+1,True)
                 if new_ip==-1:
                     return -1
             else:
