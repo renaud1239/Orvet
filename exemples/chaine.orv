@@ -14,7 +14,7 @@ affecter vrai à continuer
 tant que continuer faire
 
     lire valeur
-    différencier valeur à -1 dans continuer
+    différencier valeur avec -1 dans continuer
     si continuer alors
         associer i à valeur dans chaîne
     fin

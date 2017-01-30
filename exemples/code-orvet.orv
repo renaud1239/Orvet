@@ -6,7 +6,7 @@ entier i
 écrire Voici le "code" Orvet :
 écrire =======================
 
-pour i de 0 à 63 faire
+pour i de 0 à 75 faire
 
     écrire $i - @i
     
